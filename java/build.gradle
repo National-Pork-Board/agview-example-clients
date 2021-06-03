@@ -10,7 +10,9 @@ repositories {
 dependencies {
     testImplementation(platform('org.junit:junit-bom:5.7.2'))
     testImplementation('org.junit.jupiter:junit-jupiter')
-    testImplementation 'org.hamcrest:hamcrest:2.2'
+    testImplementation('org.hamcrest:hamcrest:2.2')
+
+    implementation('com.fasterxml.jackson.core:jackson-databind:2.12.3')
 }
 
 test {
@@ -23,4 +25,3 @@ test {
 application {
     mainClass = 'com.agview.api.example.App'
 }
-
