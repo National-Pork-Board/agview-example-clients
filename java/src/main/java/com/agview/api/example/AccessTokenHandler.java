@@ -8,6 +8,9 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -58,4 +61,16 @@ public class AccessTokenHandler {
         return objectMapper.readValue(httpResponse.body().toString(), OAuthAccessToken.class);
     }
 
+    public OAuthAccessToken getNonExpiredOrNewAccessToken(OAuthAccessToken accessToken,
+                                                          long minimumValidityLeftInSeconds) {
+        long expirationTimeInSeconds = accessToken.getExp();
+        LocalDateTime expirationTime =
+                LocalDateTime.ofInstant(Instant.ofEpochSecond(expirationTimeInSeconds), ZoneId.systemDefault());
+
+       if(expirationTime.isAfter(LocalDateTime.now().plusSeconds(minimumValidityLeftInSeconds))) {
+           return accessToken;
+       }
+
+       return getNewAccessToken();
+    }
 }

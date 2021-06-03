@@ -16,7 +16,7 @@ public class App {
         return "Hello World!";
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         System.out.println(new App().getGreeting());
 
         Arguments arguments = new Arguments();
@@ -29,7 +29,12 @@ public class App {
         argumentParser.parse(args);
 
         AccessTokenHandler accessTokenHandler = new AccessTokenHandler(arguments);
-        System.out.println("New access token info: "+accessTokenHandler.getNewAccessToken());
+        OAuthAccessToken accessToken = accessTokenHandler.getNewAccessToken();
+        System.out.println("New access token: "+accessToken+"\n");
+        Thread.sleep(1000);
+        System.out.println("Same access token: "+accessTokenHandler.getNonExpiredOrNewAccessToken(accessToken, 10)+"\n");
+        Thread.sleep(1000);
+        System.out.println("New access token due to expiration: "+accessTokenHandler.getNonExpiredOrNewAccessToken(accessToken, 100000)+"\n");
     }
 }
 
