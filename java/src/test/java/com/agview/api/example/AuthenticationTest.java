@@ -56,10 +56,10 @@ class AuthenticationTest {
 
         HttpResponse httpResponse = future.get();
 
-        return extractTokensFrom(httpResponse);
+        return extractTokenFrom(httpResponse);
     }
 
-    private OAuthAccessToken extractTokensFrom(HttpResponse httpResponse) throws Exception {
+    private OAuthAccessToken extractTokenFrom(HttpResponse httpResponse) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
 
         return objectMapper.readValue(httpResponse.body().toString(), OAuthAccessToken.class);

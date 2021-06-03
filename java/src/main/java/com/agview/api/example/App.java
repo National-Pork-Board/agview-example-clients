@@ -5,6 +5,12 @@
  */
 package com.agview.api.example;
 
+import com.beust.jcommander.JCommander;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import java.net.URISyntaxException;
+import java.util.concurrent.ExecutionException;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -12,6 +18,18 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
+
+        Arguments arguments = new Arguments();
+        JCommander argumentParser = JCommander
+                .newBuilder()
+                .addObject(arguments)
+                .programName("AgView API Tutorial")
+                .build();
+
+        argumentParser.parse(args);
+
+        AccessTokenHandler accessTokenHandler = new AccessTokenHandler(arguments);
+        System.out.println("New access token info: "+accessTokenHandler.getNewAccessToken());
     }
 }
 
