@@ -16,9 +16,13 @@
 package com.agview.api.example;
 
 import com.beust.jcommander.Parameter;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Arguments {
 
     @Parameter(names = "--baseUrl", required = true, description = "Base URL for API")
