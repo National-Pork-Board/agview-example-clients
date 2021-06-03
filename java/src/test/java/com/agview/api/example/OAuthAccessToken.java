@@ -1,16 +1,10 @@
 package com.agview.api.example;
 
+import java.math.BigInteger;
+
 public class OAuthAccessToken {
-    private String refresh;
     private String access;
-
-    public String getRefresh() {
-        return refresh;
-    }
-
-    public void setRefresh(String refresh) {
-        this.refresh = refresh;
-    }
+    private long exp;
 
     public String getAccess() {
         return access;
@@ -18,5 +12,13 @@ public class OAuthAccessToken {
 
     public void setAccess(String access) {
         this.access = access;
+    }
+
+    public long getExp() {
+        return exp;
+    }
+
+    public void setExp(long exp) {
+        this.exp = exp;
     }
 }
