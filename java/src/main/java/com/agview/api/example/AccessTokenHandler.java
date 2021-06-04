@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -14,7 +13,6 @@ import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 
 public class AccessTokenHandler {
@@ -29,25 +27,25 @@ public class AccessTokenHandler {
 
     public OAuthAccessToken getNewAccessToken() {
         try {
-            Map<String, String> body = new HashMap<>() {{
+            var body = new HashMap<>() {{
                 put("key", arguments.getApiKey());
                 put("secret", arguments.getApiSecret());
             }};
-            ObjectMapper objectMapper = new ObjectMapper();
-            String bodyJsonStr = objectMapper
+            var objectMapper = new ObjectMapper();
+            var bodyJsonStr = objectMapper
                     .writerWithDefaultPrettyPrinter()
                     .writeValueAsString(body);
-            HttpRequest request = HttpRequest.newBuilder()
+            var request = HttpRequest.newBuilder()
                     .uri(new URI(arguments.getBaseUrl() + "/auth/org-token/"))
                     .headers("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(bodyJsonStr))
                     .build();
 
-            CompletableFuture<HttpResponse> future =
+            var future =
                     httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                             .thenApply(Function.identity());
 
-            HttpResponse httpResponse = future.get();
+            var httpResponse = future.get();
 
             return extractTokenFrom(httpResponse);
         } catch (Exception e) {
@@ -56,15 +54,15 @@ public class AccessTokenHandler {
     }
 
     private OAuthAccessToken extractTokenFrom(HttpResponse httpResponse) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
+        var objectMapper = new ObjectMapper();
 
         return objectMapper.readValue(httpResponse.body().toString(), OAuthAccessToken.class);
     }
 
     public OAuthAccessToken getNonExpiredOrNewAccessToken(OAuthAccessToken accessToken,
                                                           long minimumValidityLeftInSeconds) {
-        long expirationTimeInSeconds = accessToken.getExp();
-        LocalDateTime expirationTime =
+        var expirationTimeInSeconds = accessToken.getExp();
+        var expirationTime =
                 LocalDateTime.ofInstant(Instant.ofEpochSecond(expirationTimeInSeconds), ZoneId.systemDefault());
 
        if(expirationTime.isAfter(LocalDateTime.now().plusSeconds(minimumValidityLeftInSeconds))) {

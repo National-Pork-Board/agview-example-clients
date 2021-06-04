@@ -10,8 +10,8 @@ public class App {
     public static void main(String[] args) throws InterruptedException {
         System.out.println(new App().getGreeting());
 
-        Arguments arguments = new Arguments();
-        JCommander argumentParser = JCommander
+        var arguments = new Arguments();
+        var argumentParser = JCommander
                 .newBuilder()
                 .addObject(arguments)
                 .programName("AgView API Tutorial")
@@ -19,8 +19,8 @@ public class App {
 
         argumentParser.parse(args);
 
-        AccessTokenHandler accessTokenHandler = new AccessTokenHandler(arguments);
-        OAuthAccessToken accessToken = accessTokenHandler.getNewAccessToken();
+        var accessTokenHandler = new AccessTokenHandler(arguments);
+        var accessToken = accessTokenHandler.getNewAccessToken();
         System.out.println("New access token: "+accessToken+"\n");
         Thread.sleep(1000);
         System.out.println("Same access token: "+accessTokenHandler.getNonExpiredOrNewAccessToken(accessToken, 10)+"\n");

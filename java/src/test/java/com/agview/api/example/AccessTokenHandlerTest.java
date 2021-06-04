@@ -31,7 +31,7 @@ class AccessTokenHandlerTest {
 
     @Test
     public void getsNewAccessToken() {
-        OAuthAccessToken actual = sut.getNewAccessToken();
+        var actual = sut.getNewAccessToken();
 
         assertThat(actual.getAccess(), is(notNullValue()));
         assertThat(actual.getExp(), is(greaterThan(0L)));
@@ -39,18 +39,18 @@ class AccessTokenHandlerTest {
 
     @Test
     public void reusesExistingNonExpiredAccessToken() {
-        OAuthAccessToken originalAccessToken = sut.getNewAccessToken();
+        var originalAccessToken = sut.getNewAccessToken();
 
-        OAuthAccessToken actual = sut.getNonExpiredOrNewAccessToken(originalAccessToken, 10);
+        var actual = sut.getNonExpiredOrNewAccessToken(originalAccessToken, 10);
 
         assertThat(actual, is(originalAccessToken));
     }
 
     @Test
     public void getsNewAccessTokenWhenExistingOneIsOutsideOfValidityRange() {
-        OAuthAccessToken originalAccessToken = sut.getNewAccessToken();
+        var originalAccessToken = sut.getNewAccessToken();
 
-        OAuthAccessToken actual = sut.getNonExpiredOrNewAccessToken(originalAccessToken, 10000);
+        var actual = sut.getNonExpiredOrNewAccessToken(originalAccessToken, 10000);
 
         assertThat(actual, is(not(originalAccessToken)));
     }
@@ -58,19 +58,19 @@ class AccessTokenHandlerTest {
     @Test
     @Disabled
     public void getsIncidents() throws Exception {
-        OAuthAccessToken tokens = sut.getNewAccessToken();
-        HttpRequest request = HttpRequest.newBuilder()
+        var tokens = sut.getNewAccessToken();
+        var request = HttpRequest.newBuilder()
                 .uri(new URI(BASE_URL+"/api/v1/incidents/"))
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer "+tokens.getExp())
                 .GET()
                 .build();
 
-        CompletableFuture<HttpResponse> future =
+        var future =
             httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                       .thenApply(Function.identity());
 
-        HttpResponse httpResponse = future.get();
+        var httpResponse = future.get();
         assertThat(httpResponse.statusCode(), is(200));
     }
 
