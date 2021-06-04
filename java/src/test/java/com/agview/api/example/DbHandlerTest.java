@@ -19,10 +19,16 @@ class DbHandlerTest {
     private static final int SITE_CAPACITY_NUMBER_BARNS = 3;
     private static final int SITE_CAPACITY_NUMBER_ANIMALS = 1000;
     private static final int NUMBER_OF_ANIMALS_ONSITE = 20;
+    private static final String STREET_ADDRESS = "951 S. Green Rd";
+    private static final String CITY = "South Euclid";
+    private static final String STATE = "OH";
+    private static final String ZIP = "44121";
 
     @BeforeEach
     public void setup() {
-        sut = new DbHandler(System.getProperty("user.dir")+"/src/main/resources/premise.csv");
+        var projectRoot = System.getProperty("user.dir");
+        sut = new DbHandler(projectRoot+"/src/main/resources/premise.csv",
+                projectRoot+"/src/main/resources/premise_address.csv");
     }
 
     @Test
@@ -33,6 +39,15 @@ class DbHandlerTest {
         var actual = sut.getPremisesToLoad();
 
         assertThat(actual, contains(expectedPremise));
+    }
+
+    @Test
+    public void getsPremiseAddresses() {
+        var expectedAddress = new PremiseAddress(USDA_PIN, STREET_ADDRESS, CITY, STATE, ZIP);
+
+        var actual = sut.getPremiseAddressesToLoad();
+
+        assertThat(actual, contains(expectedAddress));
     }
 
 }

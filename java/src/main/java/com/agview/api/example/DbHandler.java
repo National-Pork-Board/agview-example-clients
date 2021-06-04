@@ -4,29 +4,28 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.input.BOMInputStream;
 
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class DbHandler {
 
-    private final String csvFilePath;
+    private final String premisesFilePath;
+    private final String premiseAddressesFilePath;
 
-    public DbHandler(String csvFilePath) {
-        this.csvFilePath = csvFilePath;
+    public DbHandler(String premisesFilePath, String premiseAddressesFilePath) {
+        this.premisesFilePath = premisesFilePath;
+        this.premiseAddressesFilePath = premiseAddressesFilePath;
     }
 
     public Collection<Premise> getPremisesToLoad() {
-        try (Reader in = new InputStreamReader(new BOMInputStream(new FileInputStream(csvFilePath)), StandardCharsets.UTF_8)) {
-            Iterable<CSVRecord> records = CSVFormat.EXCEL.withHeader().parse(in);
+        try (var reader = createReader(premisesFilePath)) {
+            var records = CSVFormat.EXCEL.withHeader().parse(reader);
 
-            Collection<Premise> premises = new ArrayList<>();
+            var premises = new ArrayList<Premise>();
             for (CSVRecord record : records) {
-                Premise premise = new Premise();
+                var premise = new Premise();
                 premise.setUsdaPin(record.get("usda_pin"));
                 premise.setPremName(record.get("prem_name"));
                 premise.setSiteCapacityNumberAnimals(Integer.parseInt(record.get("site_capacity_number_animals")));
@@ -46,4 +45,29 @@ public class DbHandler {
         }
     }
 
+    private Reader createReader(String filePath) throws FileNotFoundException {
+        return new InputStreamReader(new BOMInputStream(new FileInputStream(filePath)), StandardCharsets.UTF_8);
+    }
+
+    public Collection<PremiseAddress> getPremiseAddressesToLoad() {
+        try (var reader = createReader(premiseAddressesFilePath)) {
+            var records = CSVFormat.EXCEL.withHeader().parse(reader);
+
+            var premiseAddresses = new ArrayList<PremiseAddress>();
+            for (CSVRecord record : records) {
+                var premiseAddress = new PremiseAddress();
+                premiseAddress.setUsdaPin(record.get("usda_pin"));
+                premiseAddress.setStreetAddress(record.get("street_address"));
+                premiseAddress.setCity(record.get("city"));
+                premiseAddress.setState(record.get("state"));
+                premiseAddress.setZip(record.get("zip"));
+
+                premiseAddresses.add(premiseAddress);
+            }
+
+            return premiseAddresses;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
