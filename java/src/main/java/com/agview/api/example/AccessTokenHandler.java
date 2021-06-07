@@ -17,9 +17,9 @@ public class AccessTokenHandler {
 
 
     private final HttpClient httpClient;
-    private final ConnectionInfo connectionInfo;
+    private final Arguments connectionInfo;
 
-    public AccessTokenHandler(HttpClient httpClient, ConnectionInfo connectionInfo) {
+    public AccessTokenHandler(HttpClient httpClient, Arguments connectionInfo) {
         this.httpClient = httpClient;
         this.connectionInfo = connectionInfo;
     }

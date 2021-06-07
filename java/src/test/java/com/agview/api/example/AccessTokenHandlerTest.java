@@ -25,7 +25,7 @@ class AccessTokenHandlerTest {
 
     @BeforeEach
     public void setup() {
-        sut = new AccessTokenHandler(httpClient, new ConnectionInfo(BASE_URL, API_KEY, API_SECRET));
+        sut = new AccessTokenHandler(httpClient, new Arguments(BASE_URL, API_KEY, API_SECRET));
     }
 
     @Test

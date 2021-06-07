@@ -1,5 +1,6 @@
 package com.agview.api.example;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.URI;
@@ -14,12 +15,12 @@ import java.util.stream.Collectors;
 public class PremisePostHandler {
 
     private final HttpClient httpClient;
-    private final ConnectionInfo connectionInfo;
+    private final Arguments connectionInfo;
     private final AccessTokenHandler accessTokenHandler;
     private final DbHandler dbHandler;
 
     public PremisePostHandler(HttpClient httpClient,
-                              ConnectionInfo connectionInfo,
+                              Arguments connectionInfo,
                               AccessTokenHandler accessTokenHandler,
                               DbHandler dbHandler) {
         this.httpClient = httpClient;
@@ -28,7 +29,7 @@ public class PremisePostHandler {
         this.dbHandler = dbHandler;
     }
 
-    public HttpResponse<String> createPremises() {
+    public CreatedPremise[] createPremises() {
         try {
             Collection<Premise> premises = dbHandler.getPremisesToLoad();
             Collection<PremiseAddress> premiseAddresses = dbHandler.getPremiseAddressesToLoad();
@@ -74,9 +75,11 @@ public class PremisePostHandler {
                     .POST(HttpRequest.BodyPublishers.ofString(bodyJsonStr))
                     .build();
             var future = httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                            .thenApply(Function.identity());
+                            .thenApply(HttpResponse::body);
+            var responseObjectMapper =
+                    new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);;
 
-            return future.get();
+            return responseObjectMapper.readValue(future.get(), CreatedPremise[].class);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

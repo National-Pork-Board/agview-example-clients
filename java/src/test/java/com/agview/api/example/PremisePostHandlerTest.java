@@ -1,15 +1,14 @@
 package com.agview.api.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.net.http.HttpClient;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 
 class PremisePostHandlerTest {
 
@@ -25,7 +24,7 @@ class PremisePostHandlerTest {
     public void setup() {
         var dbHandler = new DbHandler(PROJECT_ROOT+"/src/main/resources/premise.csv",
                 PROJECT_ROOT+"/src/main/resources/premise_address.csv");
-        var connectionInfo = new ConnectionInfo(BASE_URL, API_KEY, API_SECRET);
+        var connectionInfo = new Arguments(BASE_URL, API_KEY, API_SECRET);
         var accessTokenHandler = new AccessTokenHandler(httpClient, connectionInfo);
         sut = new PremisePostHandler(httpClient,
                 connectionInfo,
@@ -37,12 +36,7 @@ class PremisePostHandlerTest {
     public void createsPremises() throws JsonProcessingException {
         var actual = sut.createPremises();
 
-        assertThat(actual.statusCode(), is(201));
-        var actualResponseBody = actual.body();
-        var objectMapper =
-                new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);;
-        var actualCreatedPremises = objectMapper.readValue(actualResponseBody, CreatedPremise[].class);
-        assertThat(actualCreatedPremises[0].getId(), is(greaterThan(0)));
+        assertThat(actual[0].getId(), is(greaterThan(0)));
     }
 
 }

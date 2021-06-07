@@ -8,6 +8,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class DbHandler {
 
@@ -69,5 +70,23 @@ public class DbHandler {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<String> getPremisesColumnNames() {
+        return getColumnNames(premisesFilePath);
+    }
+
+    private List<String> getColumnNames(String filePath) {
+        try (var reader = createReader(filePath)) {
+            var records = CSVFormat.EXCEL.withHeader().parse(reader);
+
+            return records.getHeaderNames();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getPremiseAddressesColumnNames() {
+        return getColumnNames(premiseAddressesFilePath);
     }
 }

@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConnectionInfo {
+public class Arguments {
 
     @Parameter(names = "--baseUrl", required = true, description = "Base URL for API")
     private String baseUrl;
