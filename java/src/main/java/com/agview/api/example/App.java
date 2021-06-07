@@ -2,6 +2,8 @@ package com.agview.api.example;
 
 import com.beust.jcommander.JCommander;
 
+import java.net.http.HttpClient;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -10,16 +12,16 @@ public class App {
     public static void main(String[] args) throws InterruptedException {
         System.out.println(new App().getGreeting());
 
-        var arguments = new Arguments();
+        var connectionInfo = new ConnectionInfo();
         var argumentParser = JCommander
                 .newBuilder()
-                .addObject(arguments)
+                .addObject(connectionInfo)
                 .programName("AgView API Tutorial")
                 .build();
 
         argumentParser.parse(args);
 
-        var accessTokenHandler = new AccessTokenHandler(arguments);
+        var accessTokenHandler = new AccessTokenHandler(HttpClient.newHttpClient(), connectionInfo);
         var accessToken = accessTokenHandler.getNewAccessToken();
         System.out.println("New access token: "+accessToken+"\n");
         Thread.sleep(1000);

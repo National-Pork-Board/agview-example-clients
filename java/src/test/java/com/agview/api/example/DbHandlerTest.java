@@ -10,7 +10,7 @@ class DbHandlerTest {
 
     private DbHandler sut;
 
-    private static final String USDA_PIN = "12345";
+    private static final String USDA_PIN = "00LAT5C";
     private static final String PREM_NAME = "David's Prem";
     private static final String SPECIES = "Bushpig";
     private static final String ICE_CONTACT_PHONE = "12165551234";

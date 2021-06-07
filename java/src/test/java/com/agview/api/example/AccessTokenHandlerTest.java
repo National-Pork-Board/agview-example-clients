@@ -8,7 +8,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,7 +25,7 @@ class AccessTokenHandlerTest {
 
     @BeforeEach
     public void setup() {
-        sut = new AccessTokenHandler(new Arguments(BASE_URL, API_KEY, API_SECRET));
+        sut = new AccessTokenHandler(httpClient, new ConnectionInfo(BASE_URL, API_KEY, API_SECRET));
     }
 
     @Test
