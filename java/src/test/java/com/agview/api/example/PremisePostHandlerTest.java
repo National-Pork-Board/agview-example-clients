@@ -22,7 +22,7 @@ class PremisePostHandlerTest {
 
     @BeforeEach
     public void setup() {
-        var dbHandler = new DbHandler(PROJECT_ROOT+"/src/main/resources/premise.csv",
+        var dbHandler = new PremiseDbHandler(PROJECT_ROOT+"/src/main/resources/premise.csv",
                 PROJECT_ROOT+"/src/main/resources/premise_address.csv");
         var connectionInfo = new Arguments(BASE_URL, API_KEY, API_SECRET);
         var accessTokenHandler = new AccessTokenHandler(httpClient, connectionInfo);

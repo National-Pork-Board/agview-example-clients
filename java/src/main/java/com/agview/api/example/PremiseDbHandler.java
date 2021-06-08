@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class DbHandler {
+public class PremiseDbHandler {
 
     private final String premisesFilePath;
     private final String premiseAddressesFilePath;
 
-    public DbHandler(String premisesFilePath, String premiseAddressesFilePath) {
+    public PremiseDbHandler(String premisesFilePath, String premiseAddressesFilePath) {
         this.premisesFilePath = premisesFilePath;
         this.premiseAddressesFilePath = premiseAddressesFilePath;
     }

@@ -11,7 +11,7 @@ public class App {
     public static void main(String[] args) throws InterruptedException {
         Arguments arguments = processArguments(args);
         var httpClient  = HttpClient.newHttpClient();
-        var dbHandler = new DbHandler(PROJECT_ROOT+"/src/main/resources/premise.csv",
+        var dbHandler = new PremiseDbHandler(PROJECT_ROOT+"/src/main/resources/premise.csv",
                 PROJECT_ROOT+"/src/main/resources/premise_address.csv");
 
         System.out.println("*********Handle Access Token*************************************************");

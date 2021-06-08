@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-class DbHandlerTest {
+class PremiseDbHandlerTest {
 
-    private DbHandler sut;
+    private PremiseDbHandler sut;
 
     private static final String USDA_PIN = "00LAT5C";
     private static final String PREM_NAME = "David's Prem";
@@ -27,7 +27,7 @@ class DbHandlerTest {
     @BeforeEach
     public void setup() {
         var projectRoot = System.getProperty("user.dir");
-        sut = new DbHandler(projectRoot+"/src/main/resources/premise.csv",
+        sut = new PremiseDbHandler(projectRoot+"/src/main/resources/premise.csv",
                 projectRoot+"/src/main/resources/premise_address.csv");
     }
 

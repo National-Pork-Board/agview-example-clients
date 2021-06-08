@@ -17,22 +17,22 @@ public class PremisePostHandler {
     private final HttpClient httpClient;
     private final Arguments connectionInfo;
     private final AccessTokenHandler accessTokenHandler;
-    private final DbHandler dbHandler;
+    private final PremiseDbHandler premiseDbHandler;
 
     public PremisePostHandler(HttpClient httpClient,
                               Arguments connectionInfo,
                               AccessTokenHandler accessTokenHandler,
-                              DbHandler dbHandler) {
+                              PremiseDbHandler premiseDbHandler) {
         this.httpClient = httpClient;
         this.connectionInfo = connectionInfo;
         this.accessTokenHandler = accessTokenHandler;
-        this.dbHandler = dbHandler;
+        this.premiseDbHandler = premiseDbHandler;
     }
 
     public CreatedPremise[] createPremises() {
         try {
-            Collection<Premise> premises = dbHandler.getPremisesToLoad();
-            Collection<PremiseAddress> premiseAddresses = dbHandler.getPremiseAddressesToLoad();
+            Collection<Premise> premises = premiseDbHandler.getPremisesToLoad();
+            Collection<PremiseAddress> premiseAddresses = premiseDbHandler.getPremiseAddressesToLoad();
 
             //        var projectRoot = System.getProperty("user.dir");
             //        var dbHandler = new DbHandler(projectRoot+"/src/main/resources/premise.csv",
