@@ -36,33 +36,42 @@ public class MovementPostHandler {
 
             var movementAddressesByMovementId = movementsAddresses.stream().collect(Collectors.toMap(MovementAddresses::getMovementId, Function.identity()));
 
-            var postRequestBody = movements.stream().map(movement ->
-                    new HashMap<String, Object>() {
-                        {
-                            put("species", movement.getSpecies());
-                            put("numberInShipment", movement.getNumberInShipment());
-                            put("movementType", movement.getMovementType());
-                            put("movementDatetime", movement.getMovementDatetime());
-                            put("source", movementAddressesByMovementId.get(movement.getMovementId()).getSource());
-                            put("sourceLatitude", movementAddressesByMovementId.get(movement.getMovementId()).getSourceLatitude());
-                            put("sourceLongitude", movementAddressesByMovementId.get(movement.getMovementId()).getSourceLongitude());
-                            put("sourceAddress", new HashMap<String, String>() {{
-                                put("streetAddress", movementAddressesByMovementId.get(movement.getMovementId()).getSourceStreetAddress());
-                                put("city", movementAddressesByMovementId.get(movement.getMovementId()).getSourceCity());
-                                put("state", movementAddressesByMovementId.get(movement.getMovementId()).getSourceState());
-                                put("zip", movementAddressesByMovementId.get(movement.getMovementId()).getSourceZip());
-                            }});
-                            put("destination", movementAddressesByMovementId.get(movement.getMovementId()).getTarget());
-                            put("destinationLatitude", movementAddressesByMovementId.get(movement.getMovementId()).getTargetLatitude());
-                            put("destinationLongitude", movementAddressesByMovementId.get(movement.getMovementId()).getTargetLongitude());
-                            put("destinationAddress", new HashMap<String, String>() {{
-                                put("streetAddress", movementAddressesByMovementId.get(movement.getMovementId()).getTargetStreetAddress());
-                                put("city", movementAddressesByMovementId.get(movement.getMovementId()).getTargetCity());
-                                put("state", movementAddressesByMovementId.get(movement.getMovementId()).getTargetState());
-                                put("zip", movementAddressesByMovementId.get(movement.getMovementId()).getTargetZip());
-                            }});
-                        }
-                    }).collect(Collectors.toList());
+            var postRequestBody = movements.stream().map(movement -> {
+                var source = movementAddressesByMovementId.get(movement.getMovementId()).getSource();
+                var sourceLatitude = movementAddressesByMovementId.get(movement.getMovementId()).getSourceLatitude();
+                var target = movementAddressesByMovementId.get(movement.getMovementId()).getTarget();
+                var targetLatitude = movementAddressesByMovementId.get(movement.getMovementId()).getTargetLatitude();
+
+                var requestBody = new HashMap<String, Object>();
+                requestBody.put("species", movement.getSpecies());
+                requestBody.put("numberInShipment", movement.getNumberInShipment());
+                requestBody.put("movementType", movement.getMovementType());
+                requestBody.put("movementDatetime", movement.getMovementDatetime());
+                requestBody.put("source", movementAddressesByMovementId.get(movement.getMovementId()).getSource());
+                requestBody.put("sourceLatitude", movementAddressesByMovementId.get(movement.getMovementId()).getSourceLatitude());
+                requestBody.put("sourceLongitude", movementAddressesByMovementId.get(movement.getMovementId()).getSourceLongitude());
+                if (source == null && sourceLatitude == null) {
+                    requestBody.put("sourceAddress", new HashMap<String, String>() {{
+                        put("streetAddress", movementAddressesByMovementId.get(movement.getMovementId()).getSourceStreetAddress());
+                        put("city", movementAddressesByMovementId.get(movement.getMovementId()).getSourceCity());
+                        put("state", movementAddressesByMovementId.get(movement.getMovementId()).getSourceState());
+                        put("zip", movementAddressesByMovementId.get(movement.getMovementId()).getSourceZip());
+                    }});
+                }
+                requestBody.put("destination", movementAddressesByMovementId.get(movement.getMovementId()).getTarget());
+                requestBody.put("destinationLatitude", movementAddressesByMovementId.get(movement.getMovementId()).getTargetLatitude());
+                requestBody.put("destinationLongitude", movementAddressesByMovementId.get(movement.getMovementId()).getTargetLongitude());
+                if (target == null && targetLatitude == null) {
+                    requestBody.put("destinationAddress", new HashMap<String, String>() {{
+                        put("streetAddress", movementAddressesByMovementId.get(movement.getMovementId()).getTargetStreetAddress());
+                        put("city", movementAddressesByMovementId.get(movement.getMovementId()).getTargetCity());
+                        put("state", movementAddressesByMovementId.get(movement.getMovementId()).getTargetState());
+                        put("zip", movementAddressesByMovementId.get(movement.getMovementId()).getTargetZip());
+                    }});
+                }
+
+                return requestBody;
+            }).collect(Collectors.toList());
 
             var objectMapper = new ObjectMapper();
             var bodyJsonStr = objectMapper

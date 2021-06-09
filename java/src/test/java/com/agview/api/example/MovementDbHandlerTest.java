@@ -13,7 +13,7 @@ class MovementDbHandlerTest {
     private final int MOVEMENT_ID1 = 1;
     private final String SPECIES = "Swine";
     private final int NUMBER_IN_SHIPMENT = 10;
-    private final String MOVEMENT_DATETIME = "06/08/2021";
+    private final String MOVEMENT_DATETIME = "2021-06-08T13:45";
     private final String MOVEMENT_TYPE = "Feeder Pigs";
 
     private final String SOURCE_PREM_ID = "1277XH9";
