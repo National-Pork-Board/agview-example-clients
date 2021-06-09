@@ -1,6 +1,7 @@
 package com.agview.api.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,7 +34,7 @@ public class MovementPostHandler {
         this.movementDbHandler = movementDbHandler;
     }
 
-    public CreatedMovement[] createMovements() {
+    public Collection<CreatedMovement> createMovements() {
         try {
             Collection<Movement> movements = movementDbHandler.getMovementsToLoad();
             Collection<MovementAddresses> movementsAddresses = movementDbHandler.getMovementsAddressesToLoad();
@@ -86,7 +87,7 @@ public class MovementPostHandler {
         return requestBody;
     }
 
-    private CreatedMovement[] postMovements(java.util.List<HashMap<String, Object>> postRequestBody) throws JsonProcessingException, URISyntaxException, InterruptedException, java.util.concurrent.ExecutionException {
+    private Collection<CreatedMovement> postMovements(java.util.List<HashMap<String, Object>> postRequestBody) throws JsonProcessingException, URISyntaxException, InterruptedException, java.util.concurrent.ExecutionException {
         var objectMapper = new ObjectMapper();
         var bodyJsonStr = objectMapper
                 .writerWithDefaultPrettyPrinter()
@@ -103,10 +104,10 @@ public class MovementPostHandler {
         var responseObjectMapper =
                 new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        return responseObjectMapper.readValue(future.get(), CreatedMovement[].class);
+        return responseObjectMapper.readValue(future.get(), new TypeReference<>(){});
     }
 
-    public CreatedMovement[] createMovementsForDateRange(String startTimestamp, String endTimestamp) {
+    public Collection<CreatedMovement> createMovementsForDateRange(String startTimestamp, String endTimestamp) {
         try {
             Collection<Movement> movements = movementDbHandler.getMovementsToLoad();
             Collection<MovementAddresses> movementsAddresses = movementDbHandler.getMovementsAddressesToLoad();

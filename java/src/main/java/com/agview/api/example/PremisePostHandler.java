@@ -1,5 +1,6 @@
 package com.agview.api.example;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -29,7 +30,7 @@ public class PremisePostHandler {
         this.premiseDbHandler = premiseDbHandler;
     }
 
-    public CreatedPremise[] createPremises() {
+    public Collection<CreatedPremise> createPremises() {
         try {
             Collection<Premise> premises = premiseDbHandler.getPremisesToLoad();
             Collection<PremiseAddress> premiseAddresses = premiseDbHandler.getPremiseAddressesToLoad();
@@ -73,7 +74,7 @@ public class PremisePostHandler {
             var responseObjectMapper =
                     new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-            return responseObjectMapper.readValue(future.get(), CreatedPremise[].class);
+            return responseObjectMapper.readValue(future.get(), new TypeReference<>(){});
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

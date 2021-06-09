@@ -36,7 +36,7 @@ class PremisePostHandlerTest {
     public void createsPremises() throws JsonProcessingException {
         var actual = sut.createPremises();
 
-        assertThat(actual[0].getId(), is(greaterThan(0)));
+        assertThat(actual.iterator().next().getId(), is(greaterThan(0)));
     }
 
 }

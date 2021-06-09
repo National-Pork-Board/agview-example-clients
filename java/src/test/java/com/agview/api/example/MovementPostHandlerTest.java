@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.net.http.HttpClient;
-import java.time.LocalDateTime;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -40,16 +39,17 @@ class MovementPostHandlerTest {
     public void createsAllMovements() throws JsonProcessingException {
         var actual = sut.createMovements();
 
-        assertThat(actual.length, is(TOTAL_NUMBER_OF_MOVEMENTS));
-        assertThat(actual[0].getId(), is(greaterThan(0)));
+        assertThat(actual, hasSize(TOTAL_NUMBER_OF_MOVEMENTS));
+        assertThat(actual.iterator().next().getId(), is(greaterThan(0)));
     }
 
     @Test
     public void createsMovementsForDateRange() throws JsonProcessingException {
         var actual = sut.createMovementsForDateRange(START_DATE, END_DATE);
 
-        assertThat(actual.length, is(lessThan(TOTAL_NUMBER_OF_MOVEMENTS)));
-        assertThat(actual[0].getId(), is(greaterThan(0)));
+        assertThat(actual, not(empty()));
+        assertThat(actual, hasSize(lessThan(TOTAL_NUMBER_OF_MOVEMENTS)));
+        assertThat(actual.iterator().next().getId(), is(greaterThan(0)));
     }
 
 }
