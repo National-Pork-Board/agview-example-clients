@@ -22,7 +22,7 @@ public class App {
         Thread.sleep(1000);
         System.out.println("New access token due to expiration: "+accessTokenHandler.getNonExpiredOrNewAccessToken(accessToken, 100000)+"\n");
 
-        System.out.println("");
+        System.out.println();
         System.out.println("*********Create Premises Using Multiple CSV Files*************************************************");
         var premiseDbHandler = new PremiseDbHandler(PROJECT_ROOT+"/src/main/resources/premise.csv",
                 PROJECT_ROOT+"/src/main/resources/premise_address.csv");
@@ -34,15 +34,15 @@ public class App {
         Collection<CreatedPremise> createdPremises = premisePostHandler.createPremises();
         System.out.println("Created premises: "+createdPremises);
 
-        System.out.println("");
+        System.out.println();
         System.out.println("*********Create Movements Using Multiple CSV Files*************************************************");
         var movementDbHandler = new MovementDbHandler(PROJECT_ROOT+"/src/main/resources/movement.csv",
                 PROJECT_ROOT+"/src/main/resources/movement_addresses.csv");
         var movementPostHandler = new MovementPostHandler(httpClient, arguments, accessTokenHandler, movementDbHandler);
-        System.out.println("Combining Premise table");
-        System.out.println("\t"+premiseDbHandler.getPremisesColumnNames());
-        System.out.println("with PremiseAddress table");
-        System.out.println("\t"+premiseDbHandler.getPremiseAddressesColumnNames());
+        System.out.println("Combining Movement table");
+        System.out.println("\t"+movementDbHandler.getMovementColumnNames());
+        System.out.println("with MovementAddresses table");
+        System.out.println("\t"+movementDbHandler.getMovementAddressesColumnNames());
         Collection<CreatedMovement> createdMovements = movementPostHandler.createMovements();
         System.out.println("Created movements: "+createdMovements);
     }
