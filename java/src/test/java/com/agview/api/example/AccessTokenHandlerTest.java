@@ -1,14 +1,9 @@
 package com.agview.api.example;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.net.URI;
 import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.function.Function;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -53,26 +48,6 @@ class AccessTokenHandlerTest {
 
         assertThat(actual, is(not(originalAccessToken)));
     }
-
-    @Test
-    @Disabled
-    public void getsIncidents() throws Exception {
-        var tokens = sut.getNewAccessToken();
-        var request = HttpRequest.newBuilder()
-                .uri(new URI(BASE_URL+"/api/v1/incidents/"))
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer "+tokens.getExp())
-                .GET()
-                .build();
-
-        var future =
-            httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                      .thenApply(Function.identity());
-
-        var httpResponse = future.get();
-        assertThat(httpResponse.statusCode(), is(200));
-    }
-
 
 }
 

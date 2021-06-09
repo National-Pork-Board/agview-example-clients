@@ -34,14 +34,8 @@ public class PremisePostHandler {
             Collection<Premise> premises = premiseDbHandler.getPremisesToLoad();
             Collection<PremiseAddress> premiseAddresses = premiseDbHandler.getPremiseAddressesToLoad();
 
-            //        var projectRoot = System.getProperty("user.dir");
-            //        var dbHandler = new DbHandler(projectRoot+"/src/main/resources/premise.csv",
-            //                projectRoot+"/src/main/resources/premise_address.csv");
-
             var premiseAddressByUsdaPin = premiseAddresses.stream().collect(Collectors.toMap(PremiseAddress::getUsdaPin, Function.identity()));
-            var foo = new HashMap<String, Object>() {{
 
-            }};
             var postRequestBody = premises.stream().map(premise ->
                     new HashMap<String, Object>() {
                         {
@@ -77,7 +71,7 @@ public class PremisePostHandler {
             var future = httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                             .thenApply(HttpResponse::body);
             var responseObjectMapper =
-                    new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);;
+                    new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
             return responseObjectMapper.readValue(future.get(), CreatedPremise[].class);
         } catch (Exception e) {

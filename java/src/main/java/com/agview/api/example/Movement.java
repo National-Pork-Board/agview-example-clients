@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Movement {
-    private String referenceId;
+    private int movementId;
     private String species;
     private int numberInShipment;
     private String movementDatetime;

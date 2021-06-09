@@ -10,12 +10,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class MovementAddresses {
-    private String referenceId;
+    private int movementId;
+    private String source;
+    private String sourceLatitude;
+    private String sourceLongitude;
     private String sourceStreetAddress;
     private String sourceCity;
     private String sourceState;
     private String sourceZip;
 
+    private String target;
+    private String targetLatitude;
+    private String targetLongitude;
     private String targetStreetAddress;
     private String targetCity;
     private String targetState;

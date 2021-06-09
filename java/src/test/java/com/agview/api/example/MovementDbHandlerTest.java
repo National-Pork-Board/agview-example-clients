@@ -6,48 +6,45 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-class PremiseDbHandlerTest {
+class MovementDbHandlerTest {
 
-    private PremiseDbHandler sut;
+    private MovementDbHandler sut;
 
-    private static final String USDA_PIN = "00LAT5C";
-    private static final String PREM_NAME = "David's Prem";
-    private static final String SPECIES = "Bushpig";
-    private static final String ICE_CONTACT_PHONE = "12165551234";
-    private static final String ICE_CONTACT_EMAIL = "ice@vanila.com";
-    private static final String LOCATION_TYPE = "Nursery";
-    private static final int SITE_CAPACITY_NUMBER_BARNS = 3;
-    private static final int SITE_CAPACITY_NUMBER_ANIMALS = 1000;
-    private static final int NUMBER_OF_ANIMALS_ONSITE = 20;
-    private static final String STREET_ADDRESS = "951 S. Green Rd";
-    private static final String CITY = "South Euclid";
-    private static final String STATE = "OH";
-    private static final String ZIP = "44121";
+    private final int MOVEMENT_ID1 = 1;
+    private final String SPECIES = "Swine";
+    private final int NUMBER_IN_SHIPMENT = 10;
+    private final String MOVEMENT_DATETIME = "06/08/2021";
+    private final String MOVEMENT_TYPE = "Feeder Pigs";
+
+    private final String SOURCE_PREM_ID = "1277XH9";
+    private final String TARGET_PREM_ID = "0615PKA";
 
     @BeforeEach
     public void setup() {
         var projectRoot = System.getProperty("user.dir");
-        sut = new PremiseDbHandler(projectRoot+"/src/main/resources/premise.csv",
-                projectRoot+"/src/main/resources/premise_address.csv");
+        sut = new MovementDbHandler(projectRoot+"/src/main/resources/movement.csv",
+                projectRoot+"/src/main/resources/movement_addresses.csv");
     }
 
     @Test
-    public void getsPremises() {
-        var expectedPremise = new Premise(USDA_PIN, PREM_NAME, SPECIES, ICE_CONTACT_PHONE, ICE_CONTACT_EMAIL, LOCATION_TYPE,
-                SITE_CAPACITY_NUMBER_BARNS, SITE_CAPACITY_NUMBER_ANIMALS, NUMBER_OF_ANIMALS_ONSITE);
+    public void getsMovements() {
+        var expectedMovement = new Movement(MOVEMENT_ID1, SPECIES, NUMBER_IN_SHIPMENT, MOVEMENT_DATETIME, MOVEMENT_TYPE);
 
-        var actual = sut.getPremisesToLoad();
+        var actual = sut.getMovementsToLoad();
 
-        assertThat(actual, contains(expectedPremise));
+        assertThat(actual, hasItems(expectedMovement));
     }
 
     @Test
-    public void getsPremiseAddresses() {
-        var expectedAddress = new PremiseAddress(USDA_PIN, STREET_ADDRESS, CITY, STATE, ZIP);
+    public void getsMovementsAddresses() {
+        var expectedAddress = new MovementAddresses();
+        expectedAddress.setMovementId(MOVEMENT_ID1);
+        expectedAddress.setSource(SOURCE_PREM_ID);
+        expectedAddress.setTarget(TARGET_PREM_ID);
 
-        var actual = sut.getPremiseAddressesToLoad();
+        var actual = sut.getMovementsAddressesToLoad();
 
-        assertThat(actual, contains(expectedAddress));
+        assertThat(actual, hasItems(expectedAddress));
     }
 
 }

@@ -3,6 +3,7 @@ package com.agview.api.example;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.input.BOMInputStream;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,11 +31,11 @@ public class MovementDbHandler {
             var movements = new ArrayList<Movement>();
             for (CSVRecord record : records) {
                 var movement = new Movement();
-                movement.setReferenceId(record.get("reference_id"));
+                movement.setMovementId(Integer.parseInt(record.get("movement_id")));
                 movement.setSpecies(record.get("species"));
                 movement.setNumberInShipment(Integer.parseInt(record.get("number_in_shipment")));
                 movement.setMovementDatetime(record.get("movement_datetime"));
-                movement.setMovementType(record.get("movement_datetime"));
+                movement.setMovementType(record.get("movement_type"));
                 movements.add(movement);
             }
 
@@ -48,6 +49,12 @@ public class MovementDbHandler {
         return new InputStreamReader(new BOMInputStream(new FileInputStream(filePath)), StandardCharsets.UTF_8);
     }
 
+    private String getOrNull(CSVRecord record, String fieldName) {
+        var value = record.get(fieldName);
+
+        return StringUtils.isBlank(value) ? null : value;
+    }
+
     public Collection<MovementAddresses> getMovementsAddressesToLoad() {
         try (var reader = createReader(movementAddressesFilePath)) {
             var records = CSVFormat.EXCEL.withHeader().parse(reader);
@@ -55,15 +62,22 @@ public class MovementDbHandler {
             var movementsAddresses = new ArrayList<MovementAddresses>();
             for (CSVRecord record : records) {
                 var movementAddress = new MovementAddresses();
-                movementAddress.setSourceStreetAddress(record.get("source_street_address"));
-                movementAddress.setSourceCity(record.get("source_city"));
-                movementAddress.setSourceState(record.get("source_state"));
-                movementAddress.setSourceZip(record.get("source_zip"));
+                movementAddress.setMovementId(Integer.parseInt(record.get("movement_id")));
+                movementAddress.setSource(getOrNull(record, "source"));
+                movementAddress.setSourceLatitude(getOrNull(record,  "source_latitude"));
+                movementAddress.setSourceLongitude(getOrNull(record,  "source_longitude"));
+                movementAddress.setSourceStreetAddress(getOrNull(record, "source_street_address"));
+                movementAddress.setSourceCity(getOrNull(record, "source_city"));
+                movementAddress.setSourceState(getOrNull(record,"source_state"));
+                movementAddress.setSourceZip(getOrNull(record,"source_zip"));
 
-                movementAddress.setTargetStreetAddress(record.get("destination_street_address"));
-                movementAddress.setTargetCity(record.get("destination_city"));
-                movementAddress.setTargetState(record.get("destination_state"));
-                movementAddress.setTargetZip(record.get("destination_zip"));
+                movementAddress.setTarget(getOrNull(record, "destination"));
+                movementAddress.setTargetLatitude(getOrNull(record, "destination_latitude"));
+                movementAddress.setTargetLongitude(getOrNull(record, "destination_longitude"));
+                movementAddress.setTargetStreetAddress(getOrNull(record, "destination_street_address"));
+                movementAddress.setTargetCity(getOrNull(record, "destination_city"));
+                movementAddress.setTargetState(getOrNull(record,  "destination_state"));
+                movementAddress.setTargetZip(getOrNull(record, "destination_zip"));
 
                 movementsAddresses.add(movementAddress);
             }
