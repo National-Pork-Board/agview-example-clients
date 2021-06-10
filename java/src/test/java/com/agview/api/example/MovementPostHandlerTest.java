@@ -26,7 +26,7 @@ class MovementPostHandlerTest {
     @BeforeEach
     public void setup() {
         var dbHandler = new MovementDbHandler(PROJECT_ROOT+"/src/main/resources/movement.csv",
-                PROJECT_ROOT+"/src/main/resources/movement_addresses.csv");
+                PROJECT_ROOT+"/src/main/resources/movement_addresses.csv", new DbHandler());
         var connectionInfo = new Arguments(BASE_URL, API_KEY, API_SECRET);
         var accessTokenHandler = new AccessTokenHandler(httpClient, connectionInfo);
         sut = new MovementPostHandler(httpClient,

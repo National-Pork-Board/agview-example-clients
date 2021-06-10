@@ -34,7 +34,7 @@ class PremiseDbHandlerTest {
     public void setup() {
         var projectRoot = System.getProperty("user.dir");
         sut = new PremiseDbHandler(projectRoot+"/src/main/resources/premise.csv",
-                projectRoot+"/src/main/resources/premise_address.csv");
+                projectRoot+"/src/main/resources/premise_address.csv", new DbHandler());
     }
 
     @Test

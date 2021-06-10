@@ -2,14 +2,8 @@ package com.agview.api.example;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,14 +12,16 @@ public class MovementDbHandler {
 
     private final String movementFilePath;
     private final String movementAddressesFilePath;
+    private final DbHandler dbHandler;
 
-    public MovementDbHandler(String movementFilePath, String movementAddressesFilePath) {
+    public MovementDbHandler(String movementFilePath, String movementAddressesFilePath, DbHandler dbHandler) {
         this.movementFilePath = movementFilePath;
         this.movementAddressesFilePath = movementAddressesFilePath;
+        this.dbHandler = dbHandler;
     }
 
     public Collection<Movement> getMovementsToLoad() {
-        try (var reader = createReader(movementFilePath)) {
+        try (var reader = dbHandler.createReader(movementFilePath)) {
             var records = CSVFormat.EXCEL.withHeader().parse(reader);
 
             var movements = new ArrayList<Movement>();
@@ -45,10 +41,6 @@ public class MovementDbHandler {
         }
     }
 
-    private Reader createReader(String filePath) throws FileNotFoundException {
-        return new InputStreamReader(new BOMInputStream(new FileInputStream(filePath)), StandardCharsets.UTF_8);
-    }
-
     private String getOrNull(CSVRecord record, String fieldName) {
         var value = record.get(fieldName);
 
@@ -56,7 +48,7 @@ public class MovementDbHandler {
     }
 
     public Collection<MovementAddresses> getMovementsAddressesToLoad() {
-        try (var reader = createReader(movementAddressesFilePath)) {
+        try (var reader = dbHandler.createReader(movementAddressesFilePath)) {
             var records = CSVFormat.EXCEL.withHeader().parse(reader);
 
             var movementsAddresses = new ArrayList<MovementAddresses>();
@@ -89,20 +81,10 @@ public class MovementDbHandler {
     }
 
     public List<String> getMovementColumnNames() {
-        return getColumnNames(movementFilePath);
-    }
-
-    private List<String> getColumnNames(String filePath) {
-        try (var reader = createReader(filePath)) {
-            var records = CSVFormat.EXCEL.withHeader().parse(reader);
-
-            return records.getHeaderNames();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return dbHandler.getColumnNames(movementFilePath);
     }
 
     public List<String> getMovementAddressesColumnNames() {
-        return getColumnNames(movementAddressesFilePath);
+        return dbHandler.getColumnNames(movementAddressesFilePath);
     }
 }

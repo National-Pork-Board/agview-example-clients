@@ -23,7 +23,7 @@ class MovementDbHandlerTest {
     public void setup() {
         var projectRoot = System.getProperty("user.dir");
         sut = new MovementDbHandler(projectRoot+"/src/main/resources/movement.csv",
-                projectRoot+"/src/main/resources/movement_addresses.csv");
+                projectRoot+"/src/main/resources/movement_addresses.csv", new DbHandler());
     }
 
     @Test

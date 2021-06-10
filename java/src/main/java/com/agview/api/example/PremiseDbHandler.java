@@ -2,10 +2,7 @@ package com.agview.api.example;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.io.input.BOMInputStream;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,14 +11,16 @@ public class PremiseDbHandler {
 
     private final String premisesFilePath;
     private final String premiseAddressesFilePath;
+    private final DbHandler dbHandler;
 
-    public PremiseDbHandler(String premisesFilePath, String premiseAddressesFilePath) {
+    public PremiseDbHandler(String premisesFilePath, String premiseAddressesFilePath, DbHandler dbHandler) {
         this.premisesFilePath = premisesFilePath;
         this.premiseAddressesFilePath = premiseAddressesFilePath;
+        this.dbHandler = dbHandler;
     }
 
     public Collection<Premise> getPremisesToLoad() {
-        try (var reader = createReader(premisesFilePath)) {
+        try (var reader = dbHandler.createReader(premisesFilePath)) {
             var records = CSVFormat.EXCEL.withHeader().parse(reader);
 
             var premises = new ArrayList<Premise>();
@@ -46,12 +45,8 @@ public class PremiseDbHandler {
         }
     }
 
-    private Reader createReader(String filePath) throws FileNotFoundException {
-        return new InputStreamReader(new BOMInputStream(new FileInputStream(filePath)), StandardCharsets.UTF_8);
-    }
-
     public Collection<PremiseAddress> getPremiseAddressesToLoad() {
-        try (var reader = createReader(premiseAddressesFilePath)) {
+        try (var reader = dbHandler.createReader(premiseAddressesFilePath)) {
             var records = CSVFormat.EXCEL.withHeader().parse(reader);
 
             var premiseAddresses = new ArrayList<PremiseAddress>();
@@ -73,20 +68,10 @@ public class PremiseDbHandler {
     }
 
     public List<String> getPremisesColumnNames() {
-        return getColumnNames(premisesFilePath);
-    }
-
-    private List<String> getColumnNames(String filePath) {
-        try (var reader = createReader(filePath)) {
-            var records = CSVFormat.EXCEL.withHeader().parse(reader);
-
-            return records.getHeaderNames();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return dbHandler.getColumnNames(premisesFilePath);
     }
 
     public List<String> getPremiseAddressesColumnNames() {
-        return getColumnNames(premiseAddressesFilePath);
+        return dbHandler.getColumnNames(premiseAddressesFilePath);
     }
 }

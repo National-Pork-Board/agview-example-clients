@@ -25,7 +25,7 @@ public class App {
         System.out.println();
         System.out.println("*********Create Premises Using Multiple CSV Files*************************************************");
         var premiseDbHandler = new PremiseDbHandler(PROJECT_ROOT+"/src/main/resources/premise.csv",
-                PROJECT_ROOT+"/src/main/resources/premise_address.csv");
+                PROJECT_ROOT+"/src/main/resources/premise_address.csv", new DbHandler());
         var premisePostHandler = new PremisePostHandler(httpClient, arguments, accessTokenHandler, premiseDbHandler);
         System.out.println("Combining Premise table");
         System.out.println("\t"+premiseDbHandler.getPremisesColumnNames());
@@ -37,7 +37,7 @@ public class App {
         System.out.println();
         System.out.println("*********Create Movements Using Multiple CSV Files*************************************************");
         var movementDbHandler = new MovementDbHandler(PROJECT_ROOT+"/src/main/resources/movement.csv",
-                PROJECT_ROOT+"/src/main/resources/movement_addresses.csv");
+                PROJECT_ROOT+"/src/main/resources/movement_addresses.csv", new DbHandler());
         var movementPostHandler = new MovementPostHandler(httpClient, arguments, accessTokenHandler, movementDbHandler);
         System.out.println("Combining Movement table");
         System.out.println("\t"+movementDbHandler.getMovementColumnNames());
