@@ -13,7 +13,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  */
-package com.agview.api.example;
+package org.npb.agview.api.example;
 
 import com.beust.jcommander.Parameter;
 import lombok.AllArgsConstructor;

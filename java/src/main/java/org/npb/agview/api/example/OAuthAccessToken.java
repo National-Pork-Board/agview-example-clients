@@ -1,4 +1,4 @@
-package com.agview.api.example;
+package org.npb.agview.api.example;
 
 import lombok.Data;
 

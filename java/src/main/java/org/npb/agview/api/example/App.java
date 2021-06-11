@@ -1,11 +1,9 @@
-package com.agview.api.example;
+package org.npb.agview.api.example;
 
 import com.beust.jcommander.JCommander;
 
 import java.net.http.HttpClient;
 import java.util.Collection;
-
-import static com.agview.api.example.Constants.*;
 
 public class App {
 
@@ -30,8 +28,8 @@ public class App {
 
         System.out.println();
         System.out.println("*********Create Premises Using Multiple Data Sources*************************************************");
-        var premiseDbHandler = new PremiseDbHandler(PROJECT_ROOT+"/src/main/resources/premise.csv",
-                PROJECT_ROOT+"/src/main/resources/premise_address.csv", new DbHandler());
+        var premiseDbHandler = new PremiseDbHandler(Constants.PROJECT_ROOT+"/src/main/resources/premise.csv",
+                Constants.PROJECT_ROOT+"/src/main/resources/premise_address.csv", new DbHandler());
         var premisePostHandler = new PremisePostHandler(httpClient, arguments, accessTokenHandler, premiseDbHandler);
         System.out.println("Combining Premise data");
         System.out.println("\t"+premiseDbHandler.getPremisesColumnNames());
@@ -42,8 +40,8 @@ public class App {
 
         System.out.println();
         System.out.println("*********Create Movements Using Multiple Data Sources*************************************************");
-        var movementDbHandler = new MovementDbHandler(PROJECT_ROOT+"/src/main/resources/movement.csv",
-                PROJECT_ROOT+"/src/main/resources/movement_addresses.csv", new DbHandler());
+        var movementDbHandler = new MovementDbHandler(Constants.PROJECT_ROOT+"/src/main/resources/movement.csv",
+                Constants.PROJECT_ROOT+"/src/main/resources/movement_addresses.csv", new DbHandler());
         var movementPostHandler = new MovementPostHandler(httpClient, arguments, accessTokenHandler, movementDbHandler);
         System.out.println("Combining Movement data");
         System.out.println("\t"+movementDbHandler.getMovementColumnNames());

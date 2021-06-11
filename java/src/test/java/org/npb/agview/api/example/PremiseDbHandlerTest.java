@@ -1,5 +1,6 @@
-package com.agview.api.example;
+package org.npb.agview.api.example;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +48,7 @@ class PremiseDbHandlerTest {
 
         var actual = sut.getPremisesToLoad();
 
-        assertThat(actual, containsInAnyOrder(expectedPremise1, expectedPremise2));
+        assertThat(actual, Matchers.containsInAnyOrder(expectedPremise1, expectedPremise2));
     }
 
     @Test

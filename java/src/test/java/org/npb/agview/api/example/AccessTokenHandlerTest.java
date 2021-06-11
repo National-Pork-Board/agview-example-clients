@@ -1,5 +1,6 @@
-package com.agview.api.example;
+package org.npb.agview.api.example;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +38,7 @@ class AccessTokenHandlerTest {
 
         var actual = sut.getNonExpiredOrNewAccessToken(originalAccessToken, 10);
 
-        assertThat(actual, is(originalAccessToken));
+        assertThat(actual, Matchers.is(originalAccessToken));
     }
 
     @Test
@@ -46,7 +47,7 @@ class AccessTokenHandlerTest {
 
         var actual = sut.getNonExpiredOrNewAccessToken(originalAccessToken, 10000);
 
-        assertThat(actual, is(not(originalAccessToken)));
+        assertThat(actual, is(Matchers.not(originalAccessToken)));
     }
 
 }

@@ -1,10 +1,10 @@
-package com.agview.api.example;
+package org.npb.agview.api.example;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 class MovementDbHandlerTest {
 
@@ -32,7 +32,7 @@ class MovementDbHandlerTest {
 
         var actual = sut.getMovementsToLoad();
 
-        assertThat(actual, hasItems(expectedMovement));
+        assertThat(actual, Matchers.hasItems(expectedMovement));
     }
 
     @Test
@@ -44,7 +44,7 @@ class MovementDbHandlerTest {
 
         var actual = sut.getMovementsAddressesToLoad();
 
-        assertThat(actual, hasItems(expectedAddress));
+        assertThat(actual, Matchers.hasItems(expectedAddress));
     }
 
 }

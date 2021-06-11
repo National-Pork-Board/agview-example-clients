@@ -1,4 +1,4 @@
-package com.agview.api.example;
+package org.npb.agview.api.example;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreatedPremise {
+public class CreatedMovement {
     private int id;
 }

@@ -30,5 +30,5 @@ test {
 }
 
 application {
-    mainClass = 'com.agview.api.example.App'
+    mainClass = 'org.npb.agview.api.example.App'
 }
