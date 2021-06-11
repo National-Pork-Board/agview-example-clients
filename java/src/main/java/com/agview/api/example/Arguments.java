@@ -25,12 +25,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Arguments {
 
-    @Parameter(names = "--baseUrl", required = true, description = "Base URL for API")
+    @Parameter(names = "BASE_URL", required = true, description = "Base URL for API")
     private String baseUrl;
 
-    @Parameter(names = "--apiKey", required = true, description = "API Key")
+    @Parameter(names = "API_KEY", required = true, description = "API Key")
     private String apiKey;
 
-    @Parameter(names = "--apiSecret", required = true, description = "API Secret")
+    @Parameter(names = "API_SECRET", required = true, description = "API Secret")
     private String apiSecret;
 }

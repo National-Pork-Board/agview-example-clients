@@ -9,7 +9,13 @@ import static com.agview.api.example.Constants.*;
 
 public class App {
 
+    private final static String BASE_URL = System.getenv("NPB_BASE_URL");
+    private final static String API_KEY = System.getenv("NPB_API_KEY");
+    private final static String API_SECRET = System.getenv("NPB_API_SECRET");
+
     public static void main(String[] args) throws InterruptedException {
+        args = new String[] {"BASE_URL",BASE_URL,"API_KEY",API_KEY,"API_SECRET",API_SECRET};
+
         Arguments arguments = processArguments(args);
         var httpClient  = HttpClient.newHttpClient();
 
@@ -23,28 +29,31 @@ public class App {
         System.out.println("New access token due to expiration: "+accessTokenHandler.getNonExpiredOrNewAccessToken(accessToken, 100000)+"\n");
 
         System.out.println();
-        System.out.println("*********Create Premises Using Multiple CSV Files*************************************************");
+        System.out.println("*********Create Premises Using Multiple Data Sources*************************************************");
         var premiseDbHandler = new PremiseDbHandler(PROJECT_ROOT+"/src/main/resources/premise.csv",
                 PROJECT_ROOT+"/src/main/resources/premise_address.csv", new DbHandler());
         var premisePostHandler = new PremisePostHandler(httpClient, arguments, accessTokenHandler, premiseDbHandler);
-        System.out.println("Combining Premise table");
+        System.out.println("Combining Premise data");
         System.out.println("\t"+premiseDbHandler.getPremisesColumnNames());
-        System.out.println("with PremiseAddress table");
+        System.out.println("with PremiseAddress data");
         System.out.println("\t"+premiseDbHandler.getPremiseAddressesColumnNames());
         Collection<CreatedPremise> createdPremises = premisePostHandler.createPremises();
         System.out.println("Created premises: "+createdPremises);
 
         System.out.println();
-        System.out.println("*********Create Movements Using Multiple CSV Files*************************************************");
+        System.out.println("*********Create Movements Using Multiple Data Sources*************************************************");
         var movementDbHandler = new MovementDbHandler(PROJECT_ROOT+"/src/main/resources/movement.csv",
                 PROJECT_ROOT+"/src/main/resources/movement_addresses.csv", new DbHandler());
         var movementPostHandler = new MovementPostHandler(httpClient, arguments, accessTokenHandler, movementDbHandler);
-        System.out.println("Combining Movement table");
+        System.out.println("Combining Movement data");
         System.out.println("\t"+movementDbHandler.getMovementColumnNames());
-        System.out.println("with MovementAddresses table");
+        System.out.println("with MovementAddresses data");
         System.out.println("\t"+movementDbHandler.getMovementAddressesColumnNames());
-        Collection<CreatedMovement> createdMovements = movementPostHandler.createMovements();
-        System.out.println("Created movements: "+createdMovements);
+        System.out.println("Created movements from the entire data: "+movementPostHandler.createMovements());
+        var fromDate = "2021-06-07T00:00";
+        var toDate = "2021-06-08T23:59";
+        System.out.println("Created movements for date range "+fromDate+" thru "+toDate+": "+movementPostHandler.createMovementsForDateRange(fromDate,toDate));
+
     }
 
     private static Arguments processArguments(String[] args) {
