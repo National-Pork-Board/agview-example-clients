@@ -22,7 +22,10 @@ namespace Npb.Agview.Api.Example
             using var reader = new StreamReader(PremisesFilePath);
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
-            return csv.GetRecords<Premise>();
+            List<Premise> records = new();
+            records.AddRange(csv.GetRecords<Premise>());
+
+            return records;
         }
 
         public string[] GetPremisesColumnNames()
@@ -45,7 +48,10 @@ namespace Npb.Agview.Api.Example
             using var reader = new StreamReader(PremiseAddressesFilePath);
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
-            return csv.GetRecords<PremiseAddress>();
+            List<PremiseAddress> records = new();
+            records.AddRange(csv.GetRecords<PremiseAddress>());
+
+            return records;
         }
 
         public string[] GetPremiseAddressesColumnNames()
