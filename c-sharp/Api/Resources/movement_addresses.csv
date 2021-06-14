@@ -1,0 +1,10 @@
+﻿movement_id,source,source_latitude,source_longitude,source_street_address,source_city,source_state,source_zip,destination,destination_latitude,destination_longitude,destination_street_address,destination_city,destination_state,destination_zip
+1,1277XH9,,,,,,,0615PKA,,,,,,
+2,1277XH9,,,,,,,,41.4984191,-81.6959895,,,,
+3,1277XH9,,,,,,,,,,555 Superior Ave,Cleveland,OH,44108
+4,,41.5347285,-81.5209954,,,,,0615PKA,,,,,,
+5,,41.5347285,-81.5209954,,,,,,41.4984191,-81.6959895,,,,
+6,,41.5347285,-81.5209954,,,,,,,,555 Superior Ave,Cleveland,OH,44108
+7,,,,951 S. Green Rd,South Euclid,OH,44121,0615PKA,,,,,,
+8,,,,951 S. Green Rd,South Euclid,OH,44121,,41.4984191,-81.6959895,,,,
+9,,,,951 S. Green Rd,South Euclid,OH,44121,,,,555 Superior Ave,Cleveland,OH,44108
