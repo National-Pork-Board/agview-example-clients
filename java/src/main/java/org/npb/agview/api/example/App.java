@@ -28,8 +28,8 @@ public class App {
 
         System.out.println();
         System.out.println("*********Create Premises Using Multiple Data Sources*************************************************");
-        var premiseDbHandler = new PremiseDbHandler(Constants.PROJECT_ROOT+"/src/main/resources/premise.csv",
-                Constants.PROJECT_ROOT+"/src/main/resources/premise_address.csv", new DbHandler());
+        var premiseDbHandler = new PremiseDbHandler(Constants.DB_DIRECTORY +"/premise.csv",
+                Constants.DB_DIRECTORY +"/premise_address.csv", new DbHandler());
         var premisePostHandler = new PremisePostHandler(httpClient, arguments, accessTokenHandler, premiseDbHandler);
         System.out.println("Combining Premise data");
         System.out.println("\t"+premiseDbHandler.getPremisesColumnNames());
@@ -40,8 +40,8 @@ public class App {
 
         System.out.println();
         System.out.println("*********Create Movements Using Multiple Data Sources*************************************************");
-        var movementDbHandler = new MovementDbHandler(Constants.PROJECT_ROOT+"/src/main/resources/movement.csv",
-                Constants.PROJECT_ROOT+"/src/main/resources/movement_addresses.csv", new DbHandler());
+        var movementDbHandler = new MovementDbHandler(Constants.DB_DIRECTORY +"/movement.csv",
+                Constants.DB_DIRECTORY +"/movement_addresses.csv", new DbHandler());
         var movementPostHandler = new MovementPostHandler(httpClient, arguments, accessTokenHandler, movementDbHandler);
         System.out.println("Combining Movement data");
         System.out.println("\t"+movementDbHandler.getMovementColumnNames());

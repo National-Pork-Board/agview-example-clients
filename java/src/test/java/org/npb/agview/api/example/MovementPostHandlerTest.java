@@ -17,7 +17,6 @@ class MovementPostHandlerTest {
     private final String API_KEY = System.getenv("NPB_API_KEY");
     private final String API_SECRET = System.getenv("NPB_API_SECRET");
     private final HttpClient httpClient = HttpClient.newHttpClient();
-    private final String PROJECT_ROOT = System.getProperty("user.dir");
     private final String START_DATE = "2021-06-07T13:45";
     private final String END_DATE = "2021-06-08T13:45";
     private final int TOTAL_NUMBER_OF_MOVEMENTS = 9;
@@ -25,8 +24,8 @@ class MovementPostHandlerTest {
 
     @BeforeEach
     public void setup() {
-        var dbHandler = new MovementDbHandler(PROJECT_ROOT+"/src/main/resources/movement.csv",
-                PROJECT_ROOT+"/src/main/resources/movement_addresses.csv", new DbHandler());
+        var dbHandler = new MovementDbHandler(Constants.DB_DIRECTORY+"/movement.csv",
+                Constants.DB_DIRECTORY+"/movement_addresses.csv", new DbHandler());
         var connectionInfo = new Arguments(BASE_URL, API_KEY, API_SECRET);
         var accessTokenHandler = new AccessTokenHandler(httpClient, connectionInfo);
         sut = new MovementPostHandler(httpClient,

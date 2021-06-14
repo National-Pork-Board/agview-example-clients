@@ -4,8 +4,11 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Paths;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.npb.agview.api.example.Constants.*;
 
 class PremiseDbHandlerTest {
 
@@ -33,9 +36,8 @@ class PremiseDbHandlerTest {
 
     @BeforeEach
     public void setup() {
-        var projectRoot = System.getProperty("user.dir");
-        sut = new PremiseDbHandler(projectRoot+"/src/main/resources/premise.csv",
-                projectRoot+"/src/main/resources/premise_address.csv", new DbHandler());
+        sut = new PremiseDbHandler(DB_DIRECTORY+"/premise.csv",
+                DB_DIRECTORY+"/premise_address.csv", new DbHandler());
     }
 
     @Test

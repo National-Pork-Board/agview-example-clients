@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.npb.agview.api.example.Constants.*;
 
 class MovementDbHandlerTest {
 
@@ -21,9 +22,8 @@ class MovementDbHandlerTest {
 
     @BeforeEach
     public void setup() {
-        var projectRoot = System.getProperty("user.dir");
-        sut = new MovementDbHandler(projectRoot+"/src/main/resources/movement.csv",
-                projectRoot+"/src/main/resources/movement_addresses.csv", new DbHandler());
+        sut = new MovementDbHandler(DB_DIRECTORY+"/movement.csv",
+                DB_DIRECTORY+"/movement_addresses.csv", new DbHandler());
     }
 
     @Test

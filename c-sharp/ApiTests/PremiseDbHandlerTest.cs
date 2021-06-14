@@ -13,8 +13,8 @@ namespace Npb.Agview.ApiTests.Example
     public class PremiseDbHandlerTest
     {
         private readonly PremiseDbHandler _sut;
-        private const string PremisesFilePath = "../../../../Api/Resources/premise.csv";
-        private const string PremiseAddressesFilePath = "../../../../Api/Resources/premise_address.csv";
+        private const string PremisesFilePath = "../../../../../db/premise.csv";
+        private const string PremiseAddressesFilePath = "../../../../../db/premise_address.csv";
 
         public PremiseDbHandlerTest()
         {
