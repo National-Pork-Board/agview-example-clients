@@ -5,13 +5,11 @@ using Xunit;
 namespace Npb.Agview.ApiTests.Example
 {
 
-    
-
     public class PremiseDbHandlerTest
     {
         private readonly PremiseDbHandler _sut;
-        private const string PremisesFilePath = "../../../../../db/premise.csv";
-        private const string PremiseAddressesFilePath = "../../../../../db/premise_address.csv";
+        private const string PremisesFilePath = Constants.PremisesFilePath;
+        private const string PremiseAddressesFilePath = Constants.PremiseAddressesFilePath;
 
         private const string UsdaPin1 = "1277XH9";
         private const string UsdaPin2 = "0615PKA";
@@ -75,9 +73,9 @@ namespace Npb.Agview.ApiTests.Example
         }
 
         [Fact]
-        public void GetsPremisesColumnNames()
+        public void GetsPremiseColumnNames()
         {
-            var actual = _sut.GetPremisesColumnNames();
+            var actual = _sut.GetPremiseColumnNames();
 
             string.Join(",", actual).Should().Be("usda_pin,prem_name,site_capacity_number_animals,ice_contact_email,ice_contact_phone,location_type,species,site_capacity_number_barns,number_of_animals_on_site");
         }
@@ -110,11 +108,12 @@ namespace Npb.Agview.ApiTests.Example
         }
 
         [Fact]
-        public void GetsPremiseAddressesColumnNames()
+        public void GetsPremiseAddressColumnNames()
         {
-            var actual = _sut.GetPremiseAddressesColumnNames();
+            var actual = _sut.GetPremiseAddressColumnNames();
 
             string.Join(",", actual).Should().Be("usda_pin,street_address,city,state,zip");
         }
     }
+
 }

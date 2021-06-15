@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Npb.Agview.Api.Example;
@@ -10,14 +9,14 @@ namespace Npb.Agview.ApiTests.Example
     public class AccessTokenHandlerTest
     {
         private readonly AccessTokenHandler _sut;
-        private readonly HttpClient httpClient = new HttpClient();
-        private readonly string baseUrl = Environment.GetEnvironmentVariable("NPB_BASE_URL");
-        private readonly string apiKey = Environment.GetEnvironmentVariable("NPB_API_KEY");
-        private readonly string apiSecret = Environment.GetEnvironmentVariable("NPB_API_SECRET");
+        private readonly HttpClient _httpClient = new();
+        private readonly string BaseUrl = Constants.BaseUrl;
+        private readonly string ApiKey = Constants.ApiKey;
+        private readonly string ApiSecret = Constants.ApiSecret;
 
         public AccessTokenHandlerTest()
         {
-            _sut = new AccessTokenHandler(httpClient, baseUrl, apiKey, apiSecret);
+            _sut = new AccessTokenHandler(_httpClient, BaseUrl, ApiKey, ApiSecret);
         }
 
         [Fact]

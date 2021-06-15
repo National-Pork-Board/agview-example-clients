@@ -28,7 +28,7 @@ namespace Npb.Agview.Api.Example
             return records;
         }
 
-        public string[] GetPremisesColumnNames()
+        public string[] GetPremiseColumnNames()
         {
             return GetColumnNames(PremisesFilePath);
         }
@@ -54,7 +54,7 @@ namespace Npb.Agview.Api.Example
             return records;
         }
 
-        public string[] GetPremiseAddressesColumnNames()
+        public string[] GetPremiseAddressColumnNames()
         {
 
             return GetColumnNames(PremiseAddressesFilePath);
