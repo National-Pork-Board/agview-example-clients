@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.net.http.HttpClient;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.npb.agview.api.example.Constants.*;
 
 class PremisePostHandlerTest {
@@ -36,7 +35,7 @@ class PremisePostHandlerTest {
     public void createsPremises() throws JsonProcessingException {
         var actual = sut.createPremises();
 
-        assertThat(actual.iterator().next().getId(), is(greaterThan(0)));
+        assertThat(actual, hasSize(greaterThan(0)));
     }
 
 }
