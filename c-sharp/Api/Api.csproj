@@ -11,9 +11,5 @@
 
   <ItemGroup>
     <None Remove="CsvHelper" />
-    <None Remove="Resources\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
 </Project>
