@@ -52,6 +52,13 @@ class PremiseDbHandlerTest {
     }
 
     @Test
+    public void GetsPremiseColumnNames() {
+        var actual = sut.getPremiseColumnNames();
+
+        assertThat(actual, contains("usda_pin","prem_name","site_capacity_number_animals","ice_contact_email","ice_contact_phone","location_type","species","site_capacity_number_barns","number_of_animals_on_site"));
+    }
+
+    @Test
     public void getsPremiseAddresses() {
         var expectedAddress1 = new PremiseAddress(USDA_PIN1, STREET_ADDRESS1, CITY1, STATE1, ZIP1);
         var expectedAddress2 = new PremiseAddress(USDA_PIN2, STREET_ADDRESS2, CITY2, STATE2, ZIP2);
@@ -59,6 +66,13 @@ class PremiseDbHandlerTest {
         var actual = sut.getPremiseAddressesToLoad();
 
         assertThat(actual, containsInAnyOrder(expectedAddress1, expectedAddress2));
+    }
+
+    @Test
+    public void GetsPremiseAddressColumnNames() {
+        var actual = sut.getPremiseAddressColumnNames();
+
+        assertThat(actual, contains("usda_pin","street_address","city","state","zip"));
     }
 
 }

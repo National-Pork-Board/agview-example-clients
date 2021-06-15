@@ -67,11 +67,11 @@ public class PremiseDbHandler {
         }
     }
 
-    public List<String> getPremisesColumnNames() {
+    public List<String> getPremiseColumnNames() {
         return dbHandler.getColumnNames(premisesFilePath);
     }
 
-    public List<String> getPremiseAddressesColumnNames() {
+    public List<String> getPremiseAddressColumnNames() {
         return dbHandler.getColumnNames(premiseAddressesFilePath);
     }
 }

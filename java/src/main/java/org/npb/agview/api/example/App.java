@@ -32,9 +32,9 @@ public class App {
                 Constants.DB_DIRECTORY +"/premise_address.csv", new DbHandler());
         var premisePostHandler = new PremisePostHandler(httpClient, arguments, accessTokenHandler, premiseDbHandler);
         System.out.println("Combining Premise data");
-        System.out.println("\t"+premiseDbHandler.getPremisesColumnNames());
+        System.out.println("\t"+premiseDbHandler.getPremiseColumnNames());
         System.out.println("with PremiseAddress data");
-        System.out.println("\t"+premiseDbHandler.getPremiseAddressesColumnNames());
+        System.out.println("\t"+premiseDbHandler.getPremiseAddressColumnNames());
         Collection<CreatedPremise> createdPremises = premisePostHandler.createPremises();
         System.out.println("Created premises: "+createdPremises);
 
@@ -46,7 +46,7 @@ public class App {
         System.out.println("Combining Movement data");
         System.out.println("\t"+movementDbHandler.getMovementColumnNames());
         System.out.println("with MovementAddresses data");
-        System.out.println("\t"+movementDbHandler.getMovementAddressesColumnNames());
+        System.out.println("\t"+movementDbHandler.getMovementAddressColumnNames());
         System.out.println("Created movements from the entire data: "+movementPostHandler.createMovements());
         var fromDate = "2021-06-07T00:00";
         var toDate = "2021-06-08T23:59";

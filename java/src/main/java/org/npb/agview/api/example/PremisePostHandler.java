@@ -32,8 +32,8 @@ public class PremisePostHandler {
 
     public Collection<CreatedPremise> createPremises() {
         try {
-            Collection<Premise> premises = premiseDbHandler.getPremisesToLoad();
-            Collection<PremiseAddress> premiseAddresses = premiseDbHandler.getPremiseAddressesToLoad();
+            var premises = premiseDbHandler.getPremisesToLoad();
+            var premiseAddresses = premiseDbHandler.getPremiseAddressesToLoad();
 
             var premiseAddressByUsdaPin = premiseAddresses.stream().collect(Collectors.toMap(PremiseAddress::getUsdaPin, Function.identity()));
 

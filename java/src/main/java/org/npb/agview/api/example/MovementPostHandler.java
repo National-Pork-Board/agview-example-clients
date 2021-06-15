@@ -36,8 +36,8 @@ public class MovementPostHandler {
 
     public Collection<CreatedMovement> createMovements() {
         try {
-            Collection<Movement> movements = movementDbHandler.getMovementsToLoad();
-            Collection<MovementAddresses> movementsAddresses = movementDbHandler.getMovementsAddressesToLoad();
+            var movements = movementDbHandler.getMovementsToLoad();
+            var movementsAddresses = movementDbHandler.getMovementsAddressesToLoad();
 
             var movementAddressesByMovementId = movementsAddresses.stream().collect(Collectors.toMap(MovementAddresses::getMovementId, Function.identity()));
 
@@ -109,8 +109,8 @@ public class MovementPostHandler {
 
     public Collection<CreatedMovement> createMovementsForDateRange(String startTimestamp, String endTimestamp) {
         try {
-            Collection<Movement> movements = movementDbHandler.getMovementsToLoad();
-            Collection<MovementAddresses> movementsAddresses = movementDbHandler.getMovementsAddressesToLoad();
+            var movements = movementDbHandler.getMovementsToLoad();
+            var movementsAddresses = movementDbHandler.getMovementsAddressesToLoad();
 
             var movementAddressesByMovementId =
                     movementsAddresses.stream()

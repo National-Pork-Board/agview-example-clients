@@ -84,7 +84,7 @@ public class MovementDbHandler {
         return dbHandler.getColumnNames(movementFilePath);
     }
 
-    public List<String> getMovementAddressesColumnNames() {
+    public List<String> getMovementAddressColumnNames() {
         return dbHandler.getColumnNames(movementAddressesFilePath);
     }
 }

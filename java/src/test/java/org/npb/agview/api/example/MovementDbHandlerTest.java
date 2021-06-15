@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.npb.agview.api.example.Constants.*;
 
 class MovementDbHandlerTest {
@@ -36,6 +37,13 @@ class MovementDbHandlerTest {
     }
 
     @Test
+    public void getsMovementColumnNames() {
+        var actual = sut.getMovementColumnNames();
+
+        assertThat(actual, contains("movement_id","species","number_in_shipment","movement_datetime","movement_type"));
+    }
+
+    @Test
     public void getsMovementsAddresses() {
         var expectedAddress = new MovementAddresses();
         expectedAddress.setMovementId(MOVEMENT_ID1);
@@ -45,6 +53,13 @@ class MovementDbHandlerTest {
         var actual = sut.getMovementsAddressesToLoad();
 
         assertThat(actual, Matchers.hasItems(expectedAddress));
+    }
+
+    @Test
+    public void getsMovementAddressColumnNames() {
+        var actual = sut.getMovementAddressColumnNames();
+
+        assertThat(actual, contains("movement_id","source","source_latitude","source_longitude","source_street_address","source_city","source_state","source_zip","destination","destination_latitude","destination_longitude","destination_street_address","destination_city","destination_state","destination_zip"));
     }
 
 }
