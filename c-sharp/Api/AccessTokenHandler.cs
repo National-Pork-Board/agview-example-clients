@@ -33,7 +33,7 @@ namespace Npb.Agview.Api.Example
             return JsonConvert.DeserializeObject<OAuthAccessToken>(accessTokenJson);
         }
 
-        public async Task<OAuthAccessToken> GetNonExpiredAccessToken(OAuthAccessToken accessToken, long minimumValidityLeftInSeconds)
+        public async Task<OAuthAccessToken> GetNonExpiredOrNewAccessToken(OAuthAccessToken accessToken, long minimumValidityLeftInSeconds)
         {
             var expirationTimeInSeconds = accessToken.Exp;
             var timeOrigin = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);

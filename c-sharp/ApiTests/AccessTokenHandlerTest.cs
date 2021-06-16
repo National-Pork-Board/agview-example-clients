@@ -13,6 +13,8 @@ namespace Npb.Agview.ApiTests.Example
         private readonly string BaseUrl = Constants.BaseUrl;
         private readonly string ApiKey = Constants.ApiKey;
         private readonly string ApiSecret = Constants.ApiSecret;
+        private const int TenSeconds = 10;
+        private const int TenThousandSeconds = 10000;
 
         public AccessTokenHandlerTest()
         {
@@ -33,7 +35,7 @@ namespace Npb.Agview.ApiTests.Example
         {
             var originalAccessToken = await _sut.GetNewAccessToken();
 
-            var actual = await _sut.GetNonExpiredAccessToken(originalAccessToken, 10);
+            var actual = await _sut.GetNonExpiredOrNewAccessToken(originalAccessToken, TenSeconds);
 
             actual.Should().BeSameAs(originalAccessToken);
         }
@@ -43,7 +45,7 @@ namespace Npb.Agview.ApiTests.Example
         {
             var originalAccessToken = await _sut.GetNewAccessToken();
 
-            var actual = await _sut.GetNonExpiredAccessToken(originalAccessToken, 10000);
+            var actual = await _sut.GetNonExpiredOrNewAccessToken(originalAccessToken, TenThousandSeconds);
 
             actual.Should().NotBeSameAs(originalAccessToken);
         }
