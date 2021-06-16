@@ -9,8 +9,8 @@ namespace Npb.Agview.ApiTests.Example
     {
         private readonly MovementDbHandler _sut;
 
-        private readonly string MovementFilePath = TestConstants.MovementFilePath;
-        private readonly string MovementAddressesFilePath = TestConstants.MovementAddressesFilePath;
+        private readonly string MovementFilePath = Constants.MovementFilePath;
+        private readonly string MovementAddressesFilePath = Constants.MovementAddressesFilePath;
 
         private const int MovementId1 = 1;
         private const string Species = "Swine";

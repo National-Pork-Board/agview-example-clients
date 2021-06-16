@@ -21,7 +21,7 @@ namespace Npb.Agview.ApiTests.Example
         public MovementPostHandlerTest()
         {
             var accessTokenHandler = new AccessTokenHandler(_httpClient, BaseUrl, ApiKey, ApiSecret);
-            var movementDbHandler = new MovementDbHandler(TestConstants.MovementFilePath, TestConstants.MovementAddressesFilePath);
+            var movementDbHandler = new MovementDbHandler(Constants.MovementFilePath, Constants.MovementAddressesFilePath);
 
             _sut = new MovementPostHandler(_httpClient, accessTokenHandler, BaseUrl, movementDbHandler);
         }

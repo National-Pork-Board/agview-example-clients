@@ -8,8 +8,8 @@ namespace Npb.Agview.ApiTests.Example
     public class PremiseDbHandlerTest
     {
         private readonly PremiseDbHandler _sut;
-        private readonly string PremisesFilePath = TestConstants.PremisesFilePath;
-        private readonly string PremiseAddressesFilePath = TestConstants.PremiseAddressesFilePath;
+        private readonly string PremisesFilePath = Constants.PremisesFilePath;
+        private readonly string PremiseAddressesFilePath = Constants.PremiseAddressesFilePath;
 
         private const string UsdaPin1 = "1277XH9";
         private const string UsdaPin2 = "0615PKA";
