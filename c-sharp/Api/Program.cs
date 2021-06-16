@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,10 +30,10 @@ namespace Npb.Agview.Api.Example
             var premisePostHandler = new PremisePostHandler(httpClient, accessTokenHandler, BaseUrl, premiseDbHandler);
             Console.WriteLine("Combining Premise data");
             Console.WriteLine("\t" + string.Join(",", premiseDbHandler.GetPremiseColumnNames()));
-            //Console.WriteLine("with PremiseAddress data");
-            //Console.WriteLine("\t" + premiseDbHandler.getPremiseAddressColumnNames());
-            //Collection<CreatedPremise> createdPremises = premisePostHandler.createPremises();
-            //Console.WriteLine("Created premises: " + createdPremises);
+            Console.WriteLine("with PremiseAddress data");
+            Console.WriteLine("\t" + string.Join(",", premiseDbHandler.GetPremiseAddressColumnNames()));
+            List<CreatedPremise> createdPremises = await premisePostHandler.CreatePremises();
+            Console.WriteLine("Created premises: " + string.Join(", ", createdPremises));
         }
     }
 }
