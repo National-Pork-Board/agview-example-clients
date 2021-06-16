@@ -18,6 +18,8 @@ class AccessTokenHandlerTest {
     private final String API_KEY = System.getenv("NPB_API_KEY");
     private final String API_SECRET = System.getenv("NPB_API_SECRET");
     private final HttpClient httpClient = HttpClient.newHttpClient();
+    private final int TEN_SECONDS = 10;
+    private final int TEN_THOUSAND_SECONDS = 10000;
 
     @BeforeEach
     public void setup() {
@@ -36,7 +38,7 @@ class AccessTokenHandlerTest {
     public void reusesExistingNonExpiredAccessToken() {
         var originalAccessToken = sut.getNewAccessToken();
 
-        var actual = sut.getNonExpiredOrNewAccessToken(originalAccessToken, 10);
+        var actual = sut.getNonExpiredOrNewAccessToken(originalAccessToken, TEN_SECONDS);
 
         assertThat(actual, Matchers.is(originalAccessToken));
     }
@@ -45,7 +47,7 @@ class AccessTokenHandlerTest {
     public void getsNewAccessTokenWhenExistingOneIsOutsideOfValidityRange() {
         var originalAccessToken = sut.getNewAccessToken();
 
-        var actual = sut.getNonExpiredOrNewAccessToken(originalAccessToken, 10000);
+        var actual = sut.getNonExpiredOrNewAccessToken(originalAccessToken, TEN_THOUSAND_SECONDS);
 
         assertThat(actual, is(Matchers.not(originalAccessToken)));
     }
