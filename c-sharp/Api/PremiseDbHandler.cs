@@ -8,18 +8,18 @@ namespace Npb.Agview.Api.Example
     public class PremiseDbHandler
     {
 
-        public string PremisesFilePath { get; }
-        public string PremiseAddressesFilePath { get; }
+        private readonly string _premisesFilePath;
+        private readonly string _premiseAddressesFilePath;
 
         public PremiseDbHandler(string premisesFilePath, string premiseAddressesFilePath)
         {
-            PremisesFilePath = premisesFilePath;
-            PremiseAddressesFilePath = premiseAddressesFilePath;
+            _premisesFilePath = premisesFilePath;
+            _premiseAddressesFilePath = premiseAddressesFilePath;
         }
 
         public IEnumerable<Premise> GetPremisesToLoad()
         {
-            using var reader = new StreamReader(PremisesFilePath);
+            using var reader = new StreamReader(_premisesFilePath);
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
             List<Premise> records = new();
@@ -30,7 +30,7 @@ namespace Npb.Agview.Api.Example
 
         public string[] GetPremiseColumnNames()
         {
-            return GetColumnNames(PremisesFilePath);
+            return GetColumnNames(_premisesFilePath);
         }
 
         private string[] GetColumnNames(string filePath)
@@ -45,7 +45,7 @@ namespace Npb.Agview.Api.Example
 
         public IEnumerable<PremiseAddress> GetPremiseAddressesToLoad()
         {
-            using var reader = new StreamReader(PremiseAddressesFilePath);
+            using var reader = new StreamReader(_premiseAddressesFilePath);
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
             List<PremiseAddress> records = new();
@@ -57,7 +57,7 @@ namespace Npb.Agview.Api.Example
         public string[] GetPremiseAddressColumnNames()
         {
 
-            return GetColumnNames(PremiseAddressesFilePath);
+            return GetColumnNames(_premiseAddressesFilePath);
         }
     }
 }
