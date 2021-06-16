@@ -1,14 +1,9 @@
 ﻿using System;
-
-namespace Npb.Agview.Api.Example
+namespace Npb.Agview.ApiTests.Example
 {
-    public class Constants
+    public class TestConstants
     {
-
-        public static readonly string BaseUrl = Environment.GetEnvironmentVariable("NPB_BASE_URL");
-        public static readonly string ApiKey = Environment.GetEnvironmentVariable("NPB_API_KEY");
-        public static readonly string ApiSecret = Environment.GetEnvironmentVariable("NPB_API_SECRET");
-        private const string FilesPathDirectory = "../../db";
+        private const string FilesPathDirectory = "../../../../../db";
         public static readonly string PremisesFilePath = $"{FilesPathDirectory}/premise.csv";
         public static readonly string PremiseAddressesFilePath = $"{FilesPathDirectory}/premise_address.csv";
         public static readonly string MovementFilePath = $"{FilesPathDirectory}/movement.csv";

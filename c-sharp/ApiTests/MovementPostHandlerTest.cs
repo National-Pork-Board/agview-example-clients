@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Npb.Agview.Api.Example;
@@ -22,7 +21,7 @@ namespace Npb.Agview.ApiTests.Example
         public MovementPostHandlerTest()
         {
             var accessTokenHandler = new AccessTokenHandler(_httpClient, BaseUrl, ApiKey, ApiSecret);
-            var movementDbHandler = new MovementDbHandler(Constants.MovementFilePath, Constants.MovementAddressesFilePath);
+            var movementDbHandler = new MovementDbHandler(TestConstants.MovementFilePath, TestConstants.MovementAddressesFilePath);
 
             _sut = new MovementPostHandler(_httpClient, accessTokenHandler, BaseUrl, movementDbHandler);
         }

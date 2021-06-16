@@ -18,7 +18,7 @@ namespace Npb.Agview.ApiTests.Example
         public PremisePostHandlerTest()
         {
             var accessTokenHandler = new AccessTokenHandler(_httpClient, BaseUrl, ApiKey, ApiSecret);
-            var premiseDbHandler = new PremiseDbHandler(Constants.PremisesFilePath, Constants.PremiseAddressesFilePath);
+            var premiseDbHandler = new PremiseDbHandler(TestConstants.PremisesFilePath, TestConstants.PremiseAddressesFilePath);
 
             _sut = new PremisePostHandler(_httpClient, accessTokenHandler, BaseUrl, premiseDbHandler);
         }
