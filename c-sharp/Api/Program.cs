@@ -29,11 +29,24 @@ namespace Npb.Agview.Api.Example
             var premiseDbHandler = new PremiseDbHandler(PremisesFilePath, PremiseAddressesFilePath);
             var premisePostHandler = new PremisePostHandler(httpClient, accessTokenHandler, BaseUrl, premiseDbHandler);
             Console.WriteLine("Combining Premise data");
-            Console.WriteLine("\t" + string.Join(",", premiseDbHandler.GetPremiseColumnNames()));
+            Console.WriteLine("\t" + string.Join(", ", premiseDbHandler.GetPremiseColumnNames()));
             Console.WriteLine("with PremiseAddress data");
-            Console.WriteLine("\t" + string.Join(",", premiseDbHandler.GetPremiseAddressColumnNames()));
+            Console.WriteLine("\t" + string.Join(", ", premiseDbHandler.GetPremiseAddressColumnNames()));
             List<CreatedPremise> createdPremises = await premisePostHandler.CreatePremises();
             Console.WriteLine("Created premises: " + string.Join(", ", createdPremises));
+
+            Console.WriteLine();
+            Console.WriteLine("*********Create Movements Using Multiple Data Sources*************************************************");
+            var movementDbHandler = new MovementDbHandler(MovementFilePath, MovementAddressesFilePath);
+            var movementPostHandler = new MovementPostHandler(httpClient, accessTokenHandler, BaseUrl, movementDbHandler);
+            Console.WriteLine("Combining Movement data");
+            Console.WriteLine("\t" + string.Join(", ", movementDbHandler.GetMovementColumnNames()));
+            Console.WriteLine("with MovementAddresses data");
+            Console.WriteLine("\t" + string.Join(", ", movementDbHandler.GetMovementAddressesColumnNames()));
+            Console.WriteLine("Created movements from the entire data: " + string.Join(", ", await movementPostHandler.CreateMovements()));
+            var fromDate = "2021-06-07T00:00";
+            var toDate = "2021-06-08T23:59";
+            Console.WriteLine("Created movements for date range " + fromDate + " thru " + toDate + ": " + string.Join(", ", await movementPostHandler.CreateMovementsForDateRange(fromDate, toDate)));
         }
     }
 }
