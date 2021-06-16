@@ -57,7 +57,7 @@ class MovementDbHandlerTest {
 
     @Test
     public void getsMovementAddressColumnNames() {
-        var actual = sut.getMovementAddressColumnNames();
+        var actual = sut.getMovementAddressesColumnNames();
 
         assertThat(actual, contains("movement_id","source","source_latitude","source_longitude","source_street_address","source_city","source_state","source_zip","destination","destination_latitude","destination_longitude","destination_street_address","destination_city","destination_state","destination_zip"));
     }

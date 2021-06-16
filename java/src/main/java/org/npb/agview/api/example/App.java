@@ -45,8 +45,8 @@ public class App {
         var movementPostHandler = new MovementPostHandler(httpClient, arguments, accessTokenHandler, movementDbHandler);
         System.out.println("Combining Movement data");
         System.out.println("\t"+movementDbHandler.getMovementColumnNames());
-        System.out.println("with MovementAddresses data");
-        System.out.println("\t"+movementDbHandler.getMovementAddressColumnNames());
+        System.out.println("with Movement Addresses data");
+        System.out.println("\t"+movementDbHandler.getMovementAddressesColumnNames());
         System.out.println("Created movements from the entire data: "+movementPostHandler.createMovements());
         var fromDate = "2021-06-07T00:00";
         var toDate = "2021-06-08T23:59";
