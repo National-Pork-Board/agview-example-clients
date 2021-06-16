@@ -62,8 +62,8 @@ public class MovementPostHandler {
         requestBody.put("numberInShipment", movement.getNumberInShipment());
         requestBody.put("movementType", movement.getMovementType());
         requestBody.put("movementDatetime", movement.getMovementDatetime());
-        requestBody.put("source", movementAddressesByMovementId.get(movement.getMovementId()).getSource());
-        requestBody.put("sourceLatitude", movementAddressesByMovementId.get(movement.getMovementId()).getSourceLatitude());
+        requestBody.put("source", source);
+        requestBody.put("sourceLatitude", sourceLatitude);
         requestBody.put("sourceLongitude", movementAddressesByMovementId.get(movement.getMovementId()).getSourceLongitude());
         if (source == null && sourceLatitude == null) {
             requestBody.put("sourceAddress", new HashMap<String, String>() {{
@@ -73,8 +73,8 @@ public class MovementPostHandler {
                 put("zip", movementAddressesByMovementId.get(movement.getMovementId()).getSourceZip());
             }});
         }
-        requestBody.put("destination", movementAddressesByMovementId.get(movement.getMovementId()).getTarget());
-        requestBody.put("destinationLatitude", movementAddressesByMovementId.get(movement.getMovementId()).getTargetLatitude());
+        requestBody.put("destination", target);
+        requestBody.put("destinationLatitude", targetLatitude);
         requestBody.put("destinationLongitude", movementAddressesByMovementId.get(movement.getMovementId()).getTargetLongitude());
         if (target == null && targetLatitude == null) {
             requestBody.put("destinationAddress", new HashMap<String, String>() {{
