@@ -5,11 +5,9 @@ import com.beust.jcommander.JCommander;
 import java.net.http.HttpClient;
 import java.util.Collection;
 
-public class App {
+import static org.npb.agview.api.example.Constants.*;
 
-    private final static String BASE_URL = System.getenv("NPB_BASE_URL");
-    private final static String API_KEY = System.getenv("NPB_API_KEY");
-    private final static String API_SECRET = System.getenv("NPB_API_SECRET");
+public class App {
 
     public static void main(String[] args) throws InterruptedException {
         args = new String[] {"BASE_URL",BASE_URL,"API_KEY",API_KEY,"API_SECRET",API_SECRET};
@@ -28,8 +26,8 @@ public class App {
 
         System.out.println();
         System.out.println("*********Create Premises Using Multiple Data Sources*************************************************");
-        var premiseDbHandler = new PremiseDbHandler(Constants.DB_DIRECTORY +"/premise.csv",
-                Constants.DB_DIRECTORY +"/premise_address.csv", new DbHandler());
+        var premiseDbHandler = new PremiseDbHandler(DB_DIRECTORY +"/premise.csv",
+                DB_DIRECTORY +"/premise_address.csv", new DbHandler());
         var premisePostHandler = new PremisePostHandler(httpClient, arguments, accessTokenHandler, premiseDbHandler);
         System.out.println("Combining Premise data");
         System.out.println("\t"+premiseDbHandler.getPremiseColumnNames());
@@ -40,8 +38,8 @@ public class App {
 
         System.out.println();
         System.out.println("*********Create Movements Using Multiple Data Sources*************************************************");
-        var movementDbHandler = new MovementDbHandler(Constants.DB_DIRECTORY +"/movement.csv",
-                Constants.DB_DIRECTORY +"/movement_addresses.csv", new DbHandler());
+        var movementDbHandler = new MovementDbHandler(DB_DIRECTORY +"/movement.csv",
+                DB_DIRECTORY +"/movement_addresses.csv", new DbHandler());
         var movementPostHandler = new MovementPostHandler(httpClient, arguments, accessTokenHandler, movementDbHandler);
         System.out.println("Combining Movement data");
         System.out.println("\t"+movementDbHandler.getMovementColumnNames());
