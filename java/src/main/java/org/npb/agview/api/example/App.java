@@ -9,6 +9,8 @@ import static org.npb.agview.api.example.Constants.*;
 
 public class App {
 
+    private static final int ONE_SECOND = 1000;
+
     public static void main(String[] args) throws InterruptedException {
         args = new String[] {"BASE_URL",BASE_URL,"API_KEY",API_KEY,"API_SECRET",API_SECRET};
 
@@ -19,9 +21,9 @@ public class App {
         var accessTokenHandler = new AccessTokenHandler(HttpClient.newHttpClient(), arguments);
         var accessToken = accessTokenHandler.getNewAccessToken();
         System.out.println("New access token: "+accessToken+"\n");
-        Thread.sleep(1000);
+        Thread.sleep(ONE_SECOND);
         System.out.println("Same access token: "+accessTokenHandler.getNonExpiredOrNewAccessToken(accessToken, 10)+"\n");
-        Thread.sleep(1000);
+        Thread.sleep(ONE_SECOND);
         System.out.println("New access token due to expiration: "+accessTokenHandler.getNonExpiredOrNewAccessToken(accessToken, 100000)+"\n");
 
         System.out.println();
