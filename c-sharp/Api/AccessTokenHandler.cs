@@ -22,7 +22,7 @@ namespace Npb.Agview.Api.Example
             _apiSecret = apiSecret;
         }
 
-        public async Task<OAuthAccessToken> GetNewAccessToken()
+        public async Task<AccessToken> GetNewAccessToken()
         {
             var requestBody = JObject.FromObject(new { key = _apiKey, secret = _apiSecret }).ToString();
 
@@ -30,10 +30,10 @@ namespace Npb.Agview.Api.Example
 
             var accessTokenJson = response.Content.ReadAsStringAsync().Result;
 
-            return JsonConvert.DeserializeObject<OAuthAccessToken>(accessTokenJson);
+            return JsonConvert.DeserializeObject<AccessToken>(accessTokenJson);
         }
 
-        public async Task<OAuthAccessToken> GetNonExpiredOrNewAccessToken(OAuthAccessToken accessToken, long minimumValidityLeftInSeconds)
+        public async Task<AccessToken> GetNonExpiredOrNewAccessToken(AccessToken accessToken, long minimumValidityLeftInSeconds)
         {
             var expirationTimeInSeconds = accessToken.Exp;
             var timeOrigin = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);

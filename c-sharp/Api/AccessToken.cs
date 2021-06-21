@@ -1,6 +1,6 @@
 ﻿namespace Npb.Agview.Api.Example
 {
-    public class OAuthAccessToken
+    public class AccessToken
     {
         public string Access { get; set; }
         public long Exp { get; set; }
