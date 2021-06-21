@@ -25,7 +25,7 @@ public class AccessTokenHandler {
     }
 
 
-    public OAuthAccessToken getNewAccessToken() {
+    public AccessToken getNewAccessToken() {
         try {
             var body = new HashMap<>() {{
                 put("key", connectionInfo.getApiKey());
@@ -53,14 +53,14 @@ public class AccessTokenHandler {
         }
     }
 
-    private OAuthAccessToken extractTokenFrom(HttpResponse httpResponse) throws JsonProcessingException {
+    private AccessToken extractTokenFrom(HttpResponse httpResponse) throws JsonProcessingException {
         var objectMapper = new ObjectMapper();
 
-        return objectMapper.readValue(httpResponse.body().toString(), OAuthAccessToken.class);
+        return objectMapper.readValue(httpResponse.body().toString(), AccessToken.class);
     }
 
-    public OAuthAccessToken getNonExpiredOrNewAccessToken(OAuthAccessToken accessToken,
-                                                          long minimumValidityLeftInSeconds) {
+    public AccessToken getNonExpiredOrNewAccessToken(AccessToken accessToken,
+                                                     long minimumValidityLeftInSeconds) {
         var expirationTimeInSeconds = accessToken.getExp();
         var expirationTime =
                 LocalDateTime.ofInstant(Instant.ofEpochSecond(expirationTimeInSeconds), ZoneId.systemDefault());
