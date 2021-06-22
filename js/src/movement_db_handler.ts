@@ -11,14 +11,16 @@ var myParser: csvParse.Parser = parse({ delimiter: ',' }, function (err, data) {
             console.log("Header: " + headerRow);
             continue
         }
-        /*else {
-            for (let i = 0; i <)
-                console.log(headerRow[0] + " = " + row[0]);
-        }*/
-        console.log("Row: " + row);
+        else {
+            console.log("\nRow: " + row);
+            for (let i = 0; i < 14; i++) {
+                console.log(headerRow[i] + " = " + row[i]);
+            }
+        }
+        /*console.log("Row: " + row);
         for (let value of row) {
             console.log("Value: " + value)
-        }
+        }*/
     }
 }) as csvParse.Parser;
 
