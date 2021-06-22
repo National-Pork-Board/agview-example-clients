@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 export function getAccessToken(baseUrl: string, apiKey: String, apiSecret: string) {
-    axios.post(baseUrl + '/auth/org-token/', {
+    return axios.post(baseUrl + '/auth/org-token/', {
         key: apiKey,
         secret: apiSecret
     })
-        .then(res => {
-            console.log(res)
-        })
+        .then(res => res.data)
         .catch(error => {
             console.error(error)
         })
