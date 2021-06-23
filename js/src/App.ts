@@ -1,6 +1,6 @@
 import { getData } from "./MovementDbHandler"
 import { getAccessToken } from "./AccessTokenHandler"
-import { Constants } from './Constants'
+import Constants from './Constants'
 
 let fileContentPromise = getData("../../db/movement.csv", "../../db/movement_addresses.csv")
 fileContentPromise.then((fileContent) => {
