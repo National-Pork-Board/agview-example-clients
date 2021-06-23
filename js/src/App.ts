@@ -1,9 +1,13 @@
-import { getData } from "./MovementDbHandler"
+import { getMovementData, getMovementAddressesData } from "./MovementDbHandler"
 import { getAccessToken } from "./AccessTokenHandler"
 import Constants from './Constants'
 
-let fileContentPromise = getData("../../db/movement.csv", "../../db/movement_addresses.csv")
-fileContentPromise.then((fileContent) => {
+let movementDataPromise = getMovementData("../../db/movement.csv")
+let movementAddressesDataPromise = getMovementAddressesData("../../db/movement_addresses.csv")
+movementDataPromise.then((fileContent) => {
+    console.log(fileContent)
+})
+movementAddressesDataPromise.then((fileContent) => {
     console.log(fileContent)
 })
 
