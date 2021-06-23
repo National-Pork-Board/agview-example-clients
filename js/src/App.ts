@@ -6,6 +6,7 @@ fileContentPromise.then((fileContent) => {
     console.log(fileContent)
 })
 
-let accessTokenPromise = getAccessToken('http://localhost:8080', 'jjFuwiCo', 'Yxx6jqiEokX0zaYt1t9arCKKwDTrQjBz')
+const env = process.env
+let accessTokenPromise = getAccessToken(env.NPB_BASE_URL!, env.NPB_API_KEY!, env.NPB_API_SECRET!)
 
 accessTokenPromise.then((data) => console.log(data))
