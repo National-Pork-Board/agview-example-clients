@@ -27,16 +27,16 @@ public class App {
         System.out.println("New access token due to expiration: "+accessTokenHandler.getNonExpiredOrNewAccessToken(accessToken, 100000)+"\n");
 
         System.out.println();
-        System.out.println("*********Create Premises Using Multiple Data Sources*************************************************");
+        System.out.println("*********Create Prems Using Multiple Data Sources*************************************************");
         var premiseDbHandler = new PremiseDbHandler(DB_DIRECTORY +"/prem.csv",
                 DB_DIRECTORY +"/prem_address.csv", new DbHandler());
         var premisePostHandler = new PremisePostHandler(httpClient, arguments, accessTokenHandler, premiseDbHandler);
-        System.out.println("Combining Premise data");
+        System.out.println("Combining Prem data");
         System.out.println("\t"+premiseDbHandler.getPremiseColumnNames());
-        System.out.println("with PremiseAddress data");
+        System.out.println("with PremAddress data");
         System.out.println("\t"+premiseDbHandler.getPremiseAddressColumnNames());
         Collection<CreatedPremise> createdPremises = premisePostHandler.createPremises();
-        System.out.println("Created premises: "+createdPremises);
+        System.out.println("Created prems: "+createdPremises);
 
         System.out.println();
         System.out.println("*********Create Movements Using Multiple Data Sources*************************************************");
