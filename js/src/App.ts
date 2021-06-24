@@ -1,10 +1,16 @@
-import { getData, getColumnNames } from './DbHandler'
+import { getColumnNames } from './DbHandler'
 import { getNewAccessToken, getNonExpiredOrNewAccessToken } from './AccessTokenHandler'
 import Constants from './Constants'
 import { createPrems } from './PremPostHandler'
 import { createAllMovements, createMovementsForTimestampRange } from './MovementPostHandler'
 
 const ONE_SECOND = 1000
+const PREM_FILE_PATH = '../../db/prem.csv'
+const PREM_ADDRESS_FILE_PATH = '../../db/prem_address.csv'
+const MOVEMENT_FILE_PATH = '../../db/movement.csv'
+const MOVEMENT_ADDRESSES_FILE_PATH = '../../db/movement_addresses.csv'
+const MOVEMENT_START_TIMESTAMP = '2021-06-07T13:45'
+const MOVEMENT_END_TIMESTAMP = '2021-06-08T13:45'
 
 doIt()
 
@@ -23,23 +29,26 @@ async function doIt() {
         accessToken, 100000)
     console.log(`New access token due to expiration: ${JSON.stringify(accessToken)}\n`)
 
-    let premColumnNames = await getColumnNames('../../db/prem.csv')
-    console.log(`Prem column names: ${Array.from(premColumnNames)}`)
-    let premAddressColumnNames = await getColumnNames('../../db/prem_address.csv')
-    console.log(`Prem Address column names: ${Array.from(premAddressColumnNames)}`)
-    let movementColumnNames = await getColumnNames('../../db/movement.csv')
-    console.log(`Movement column names: ${Array.from(movementColumnNames)}`)
-    let movementAddressesColumnNames = await getColumnNames('../../db/movement_addresses.csv')
-    console.log(`Movement Addresses column names: ${Array.from(movementAddressesColumnNames)}`)
+    console.log('\n')
+    console.log('*********Create Prems Using Multiple Data Sources*************************************************')
+    console.log('Combining Prem data')
+    console.log(`\t${Array.from(await getColumnNames(PREM_FILE_PATH))}`)
+    console.log('with Prem Address data')
+    console.log(`\t${Array.from(await getColumnNames(PREM_ADDRESS_FILE_PATH))}`)
+    let premResponse = await createPrems(PREM_FILE_PATH, PREM_ADDRESS_FILE_PATH)
+    console.log(`Created Prems: ${JSON.stringify(premResponse!.data, null, 1)}`)
 
-    let premResponse = await createPrems('../../db/prem.csv', '../../db/prem_address.csv')
-    console.log(`Created prems with status ${premResponse!.status}`)
-
-    let allMovementResponse = await createAllMovements('../../db/movement.csv', '../../db/movement_addresses.csv')
-    console.log(`Created all movements with status ${allMovementResponse!.status}`)
-
-    let movementWithinTimestampResponse = await createMovementsForTimestampRange('../../db/movement.csv', '../../db/movement_addresses.csv', '2021-06-07T13:45', '2021-06-08T13:45')
-    console.log(`Created movements within timestamp range with status ${movementWithinTimestampResponse!.status}`)
+    console.log('\n')
+    console.log('*********Create Movements Using Multiple Data Sources*************************************************')
+    console.log('Combining Movement data')
+    console.log(`\t${Array.from(await getColumnNames(MOVEMENT_FILE_PATH))}`)
+    console.log('with Movement Addresses data')
+    console.log(`\t${Array.from(await getColumnNames(MOVEMENT_ADDRESSES_FILE_PATH))}`)
+    let allMovementResponse = await createAllMovements(MOVEMENT_FILE_PATH, MOVEMENT_ADDRESSES_FILE_PATH)
+    console.log(`Created Movements from entire data: ${JSON.stringify(allMovementResponse!.data, null, 1)}`)
+    let movementForTimestampRangeResponse = await createMovementsForTimestampRange(MOVEMENT_FILE_PATH, MOVEMENT_ADDRESSES_FILE_PATH,
+        MOVEMENT_START_TIMESTAMP, MOVEMENT_END_TIMESTAMP)
+    console.log(`Created movements for date range ${MOVEMENT_START_TIMESTAMP} thru ${MOVEMENT_START_TIMESTAMP}: ${JSON.stringify(movementForTimestampRangeResponse!.data, null, 1)}`)
 }
 
 function delay(ms: number) {
