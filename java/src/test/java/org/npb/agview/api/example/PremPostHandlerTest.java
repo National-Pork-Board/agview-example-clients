@@ -10,9 +10,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.npb.agview.api.example.Constants.*;
 
-class PremisePostHandlerTest {
+class PremPostHandlerTest {
 
-    private PremisePostHandler sut;
+    private PremPostHandler sut;
 
     private final String BASE_URL = System.getenv("NPB_BASE_URL");
     private final String API_KEY = System.getenv("NPB_API_KEY");
@@ -21,19 +21,19 @@ class PremisePostHandlerTest {
 
     @BeforeEach
     public void setup() {
-        var dbHandler = new PremiseDbHandler(DB_DIRECTORY+"/prem.csv",
+        var dbHandler = new PremDbHandler(DB_DIRECTORY+"/prem.csv",
                 DB_DIRECTORY+"/prem_address.csv", new DbHandler());
         var connectionInfo = new Arguments(BASE_URL, API_KEY, API_SECRET);
         var accessTokenHandler = new AccessTokenHandler(httpClient, connectionInfo);
-        sut = new PremisePostHandler(httpClient,
+        sut = new PremPostHandler(httpClient,
                 connectionInfo,
                 accessTokenHandler,
                 dbHandler);
     }
 
     @Test
-    public void createsPremises() throws JsonProcessingException {
-        var actual = sut.createPremises();
+    public void createsPrems() throws JsonProcessingException {
+        var actual = sut.createPrems();
 
         assertThat(actual, hasSize(greaterThan(0)));
     }

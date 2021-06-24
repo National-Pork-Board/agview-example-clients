@@ -28,15 +28,15 @@ public class App {
 
         System.out.println();
         System.out.println("*********Create Prems Using Multiple Data Sources*************************************************");
-        var premiseDbHandler = new PremiseDbHandler(DB_DIRECTORY +"/prem.csv",
+        var premDbHandler = new PremDbHandler(DB_DIRECTORY +"/prem.csv",
                 DB_DIRECTORY +"/prem_address.csv", new DbHandler());
-        var premisePostHandler = new PremisePostHandler(httpClient, arguments, accessTokenHandler, premiseDbHandler);
+        var premPostHandler = new PremPostHandler(httpClient, arguments, accessTokenHandler, premDbHandler);
         System.out.println("Combining Prem data");
-        System.out.println("\t"+premiseDbHandler.getPremiseColumnNames());
+        System.out.println("\t"+premDbHandler.getPremColumnNames());
         System.out.println("with PremAddress data");
-        System.out.println("\t"+premiseDbHandler.getPremiseAddressColumnNames());
-        Collection<CreatedPremise> createdPremises = premisePostHandler.createPremises();
-        System.out.println("Created prems: "+createdPremises);
+        System.out.println("\t"+premDbHandler.getPremAddressesColumnNames());
+        Collection<CreatedPrem> createdPrems = premPostHandler.createPrems();
+        System.out.println("Created prems: "+ createdPrems);
 
         System.out.println();
         System.out.println("*********Create Movements Using Multiple Data Sources*************************************************");

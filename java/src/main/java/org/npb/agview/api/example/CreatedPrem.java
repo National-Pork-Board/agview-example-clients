@@ -6,13 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
-public class PremiseAddress {
-    private String usdaPin;
-    private String streetAddress;
-    private String city;
-    private String state;
-    private String zip;
+public class CreatedPrem {
+    private int id;
 }

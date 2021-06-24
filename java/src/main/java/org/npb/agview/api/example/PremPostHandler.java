@@ -13,46 +13,46 @@ import java.util.HashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class PremisePostHandler {
+public class PremPostHandler {
 
     private final HttpClient httpClient;
     private final Arguments connectionInfo;
     private final AccessTokenHandler accessTokenHandler;
-    private final PremiseDbHandler premiseDbHandler;
+    private final PremDbHandler premDbHandler;
 
-    public PremisePostHandler(HttpClient httpClient,
-                              Arguments connectionInfo,
-                              AccessTokenHandler accessTokenHandler,
-                              PremiseDbHandler premiseDbHandler) {
+    public PremPostHandler(HttpClient httpClient,
+                           Arguments connectionInfo,
+                           AccessTokenHandler accessTokenHandler,
+                           PremDbHandler premDbHandler) {
         this.httpClient = httpClient;
         this.connectionInfo = connectionInfo;
         this.accessTokenHandler = accessTokenHandler;
-        this.premiseDbHandler = premiseDbHandler;
+        this.premDbHandler = premDbHandler;
     }
 
-    public Collection<CreatedPremise> createPremises() {
+    public Collection<CreatedPrem> createPrems() {
         try {
-            var premises = premiseDbHandler.getPremisesToLoad();
-            var premiseAddresses = premiseDbHandler.getPremiseAddressesToLoad();
+            var prems = premDbHandler.getPremsToLoad();
+            var premsAddresses = premDbHandler.getPremAddressesToLoad();
 
-            var premiseAddressByUsdaPin = premiseAddresses.stream().collect(Collectors.toMap(PremiseAddress::getUsdaPin, Function.identity()));
+            var premAddressByUsdaPin = premsAddresses.stream().collect(Collectors.toMap(PremAddress::getUsdaPin, Function.identity()));
 
-            var postRequestBody = premises.stream().map(premise ->
+            var postRequestBody = prems.stream().map(prem ->
                     new HashMap<String, Object>() {
                         {
-                            put("usdaPin", premise.getUsdaPin());
-                            put("premName", premise.getPremName());
-                            put("species", premise.getSpecies());
-                            put("iceContactPhone", premise.getIceContactPhone());
-                            put("iceContactEmail", premise.getIceContactEmail());
-                            put("locationType", premise.getLocationType());
-                            put("siteCapacityNumberBarns", premise.getSiteCapacityNumberBarns());
-                            put("siteCapacityNumberAnimals", premise.getSiteCapacityNumberAnimals());
-                            put("numberOfAnimalsOnSite", premise.getNumberOfAnimalsOnSite());
-                            put("streetAddress", premiseAddressByUsdaPin.get(premise.getUsdaPin()).getStreetAddress());
-                            put("city", premiseAddressByUsdaPin.get(premise.getUsdaPin()).getCity());
-                            put("state", premiseAddressByUsdaPin.get(premise.getUsdaPin()).getState());
-                            put("zip", premiseAddressByUsdaPin.get(premise.getUsdaPin()).getZip());
+                            put("usdaPin", prem.getUsdaPin());
+                            put("premName", prem.getPremName());
+                            put("species", prem.getSpecies());
+                            put("iceContactPhone", prem.getIceContactPhone());
+                            put("iceContactEmail", prem.getIceContactEmail());
+                            put("locationType", prem.getLocationType());
+                            put("siteCapacityNumberBarns", prem.getSiteCapacityNumberBarns());
+                            put("siteCapacityNumberAnimals", prem.getSiteCapacityNumberAnimals());
+                            put("numberOfAnimalsOnSite", prem.getNumberOfAnimalsOnSite());
+                            put("streetAddress", premAddressByUsdaPin.get(prem.getUsdaPin()).getStreetAddress());
+                            put("city", premAddressByUsdaPin.get(prem.getUsdaPin()).getCity());
+                            put("state", premAddressByUsdaPin.get(prem.getUsdaPin()).getState());
+                            put("zip", premAddressByUsdaPin.get(prem.getUsdaPin()).getZip());
                         }
                     }
             )

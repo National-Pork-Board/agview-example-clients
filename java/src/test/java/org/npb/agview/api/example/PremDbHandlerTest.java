@@ -8,9 +8,9 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 import static org.npb.agview.api.example.Constants.*;
 
-class PremiseDbHandlerTest {
+class PremDbHandlerTest {
 
-    private PremiseDbHandler sut;
+    private PremDbHandler sut;
 
     private static final String USDA_PIN1 = "1277XH9";
     private static final String USDA_PIN2 = "0615PKA";
@@ -34,43 +34,43 @@ class PremiseDbHandlerTest {
 
     @BeforeEach
     public void setup() {
-        sut = new PremiseDbHandler(DB_DIRECTORY+"/prem.csv",
+        sut = new PremDbHandler(DB_DIRECTORY+"/prem.csv",
                 DB_DIRECTORY+"/prem_address.csv", new DbHandler());
     }
 
     @Test
-    public void getsPremises() {
-        var expectedPremise1 = new Premise(USDA_PIN1, PREM_NAME1, SPECIES, ICE_CONTACT_PHONE, ICE_CONTACT_EMAIL, LOCATION_TYPE,
+    public void getsPrems() {
+        var expectedPrem1 = new Prem(USDA_PIN1, PREM_NAME1, SPECIES, ICE_CONTACT_PHONE, ICE_CONTACT_EMAIL, LOCATION_TYPE,
                 SITE_CAPACITY_NUMBER_BARNS, SITE_CAPACITY_NUMBER_ANIMALS, NUMBER_OF_ANIMALS_ONSITE);
-        var expectedPremise2 = new Premise(USDA_PIN2, PREM_NAME2, SPECIES, ICE_CONTACT_PHONE, ICE_CONTACT_EMAIL, LOCATION_TYPE,
+        var expectedPrem2 = new Prem(USDA_PIN2, PREM_NAME2, SPECIES, ICE_CONTACT_PHONE, ICE_CONTACT_EMAIL, LOCATION_TYPE,
                 SITE_CAPACITY_NUMBER_BARNS, SITE_CAPACITY_NUMBER_ANIMALS, NUMBER_OF_ANIMALS_ONSITE);
 
 
-        var actual = sut.getPremisesToLoad();
+        var actual = sut.getPremsToLoad();
 
-        assertThat(actual, Matchers.containsInAnyOrder(expectedPremise1, expectedPremise2));
+        assertThat(actual, Matchers.containsInAnyOrder(expectedPrem1, expectedPrem2));
     }
 
     @Test
-    public void GetsPremiseColumnNames() {
-        var actual = sut.getPremiseColumnNames();
+    public void GetsPremColumnNames() {
+        var actual = sut.getPremColumnNames();
 
         assertThat(actual, contains("usda_pin","prem_name","site_capacity_number_animals","ice_contact_email","ice_contact_phone","location_type","species","site_capacity_number_barns","number_of_animals_on_site"));
     }
 
     @Test
-    public void getsPremiseAddresses() {
-        var expectedAddress1 = new PremiseAddress(USDA_PIN1, STREET_ADDRESS1, CITY1, STATE1, ZIP1);
-        var expectedAddress2 = new PremiseAddress(USDA_PIN2, STREET_ADDRESS2, CITY2, STATE2, ZIP2);
+    public void getsPremAddresses() {
+        var expectedAddress1 = new PremAddress(USDA_PIN1, STREET_ADDRESS1, CITY1, STATE1, ZIP1);
+        var expectedAddress2 = new PremAddress(USDA_PIN2, STREET_ADDRESS2, CITY2, STATE2, ZIP2);
 
-        var actual = sut.getPremiseAddressesToLoad();
+        var actual = sut.getPremAddressesToLoad();
 
         assertThat(actual, containsInAnyOrder(expectedAddress1, expectedAddress2));
     }
 
     @Test
-    public void GetsPremiseAddressColumnNames() {
-        var actual = sut.getPremiseAddressColumnNames();
+    public void GetsPremAddressColumnNames() {
+        var actual = sut.getPremAddressesColumnNames();
 
         assertThat(actual, contains("usda_pin","street_address","city","state","zip"));
     }

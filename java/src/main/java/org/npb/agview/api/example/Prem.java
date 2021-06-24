@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Premise {
+public class Prem {
     private String usdaPin;
     private String premName;
     private String species;
