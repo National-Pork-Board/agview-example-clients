@@ -1,13 +1,16 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { getData } from "./DbHandler"
 import { getAccessToken } from "./AccessTokenHandler"
 import Constants from './Constants'
 
-export async function createMovements(movementFilePath: string, movementAddressesFilePath: string) {
+export async function createAllMovements(movementFilePath: string, movementAddressesFilePath: string) {
     let movements = await getData(movementFilePath)
-
     let movementsAddresses = await getData(movementAddressesFilePath)
 
+    return createMovements(movements, movementsAddresses)
+}
+
+async function createMovements(movements: Map<string, any>[], movementsAddresses: Map<string, any>[]) {
     let movementAddressesByMovementId: Map<string, Map<string, any>> = new Map()
     movementsAddresses.forEach(movementAddresses => {
         movementAddressesByMovementId.set(movementAddresses.get('movement_id'), movementAddresses)
@@ -21,7 +24,7 @@ export async function createMovements(movementFilePath: string, movementAddresse
         {
             headers: { Authorization: `Bearer ${accessToken.access}` }
         })
-        .then(res => {
+        .then((res: AxiosResponse<any>) => {
             console.log(`Created movements with status ${res.status}`)
 
             return res
@@ -85,3 +88,22 @@ function getCorrespondingAddressesRecord(movementAddressesByMovementId: Map<stri
 function getOrNull(value: any) {
     return value ? value : null
 }
+
+export async function createMovementsForTimestampRange(movementFilePath: string, movementAddressesFilePath: string, startTimestamp: string, endTimestamp: string) {
+    let allMovements = await getData(movementFilePath)
+    let movements = allMovements.filter(movementsWithinTimerange(startTimestamp, endTimestamp));
+    let movementsAddresses = await getData(movementAddressesFilePath)
+
+    return createMovements(movements, movementsAddresses)
+}
+
+function movementsWithinTimerange(startTimestamp: string, endTimestamp: string) {
+
+    return function (movement: Map<string, any>): Boolean {
+        let movementTimestamp = movement.get('movement_datetime');
+
+        return new Date(movementTimestamp) >= new Date(new Date(startTimestamp))
+            && new Date(movementTimestamp) <= new Date(new Date(endTimestamp))
+    }
+}
+
