@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function getAccessToken(baseUrl: string, apiKey: String, apiSecret: string) {
+export async function getNewAccessToken(baseUrl: string, apiKey: String, apiSecret: string) {
 
     return axios.post(baseUrl + '/auth/org-token/', {
         key: apiKey,
@@ -10,4 +10,16 @@ export async function getAccessToken(baseUrl: string, apiKey: String, apiSecret:
         .catch(error => {
             console.error(error)
         })
+}
+
+export async function getNonExpiredOrNewAccessToken(baseUrl: string, apiKey: String, apiSecret: string,
+    existingAccessToken: any, minimumValidityLeftInSeconds: number) {
+
+    let expirationTimeInSeconds = +existingAccessToken.exp
+
+    if ((expirationTimeInSeconds - minimumValidityLeftInSeconds) >= (Date.now() / 1000)) {
+        return existingAccessToken
+    }
+
+    return getNewAccessToken(baseUrl, apiKey, apiSecret)
 }

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { getData } from "./DbHandler"
-import { getAccessToken } from "./AccessTokenHandler"
+import { getNewAccessToken } from "./AccessTokenHandler"
 import Constants from './Constants'
 
 export async function createPrems(premFilePath: string, premAddressFilePath: string) {
@@ -14,7 +14,7 @@ export async function createPrems(premFilePath: string, premAddressFilePath: str
 
     let requestBody: Array<any> = createRequestBody(prems, premAddressByUsdaPin)
 
-    let accessToken = await getAccessToken(Constants.NPB_BASE_URL, Constants.NPB_API_KEY, Constants.NPB_API_SECRET)
+    let accessToken = await getNewAccessToken(Constants.NPB_BASE_URL, Constants.NPB_API_KEY, Constants.NPB_API_SECRET)
 
     return axios.post(`${Constants.NPB_BASE_URL}/api/v1/prems/`, requestBody,
         {
