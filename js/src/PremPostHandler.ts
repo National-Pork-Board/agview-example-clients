@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { getData } from "./DbHandler"
 import { getAccessToken } from "./AccessTokenHandler"
 import Constants from './Constants'
@@ -20,11 +20,7 @@ export async function createPrems(premFilePath: string, premAddressFilePath: str
         {
             headers: { Authorization: `Bearer ${accessToken.access}` }
         })
-        .then(res => {
-            console.log(`Created prems with status ${res.status}`)
-
-            return res
-        })
+        .then((res: AxiosResponse<any>) => res)
         .catch(error => {
             console.error(error)
         })

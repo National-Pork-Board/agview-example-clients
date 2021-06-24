@@ -24,11 +24,7 @@ async function createMovements(movements: Map<string, any>[], movementsAddresses
         {
             headers: { Authorization: `Bearer ${accessToken.access}` }
         })
-        .then((res: AxiosResponse<any>) => {
-            console.log(`Created movements with status ${res.status}`)
-
-            return res
-        })
+        .then((res: AxiosResponse<any>) => res)
         .catch(error => {
             console.error(error)
         })
