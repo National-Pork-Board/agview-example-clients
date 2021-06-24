@@ -66,7 +66,7 @@ namespace Npb.Agview.ApiTests.Example
         }
 
         [Fact]
-        public void GetsPremiseAddressColumnNames()
+        public void GetsMovementAddressColumnNames()
         {
             var actual = _sut.GetMovementAddressesColumnNames();
 

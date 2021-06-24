@@ -2,7 +2,7 @@
 
 namespace Npb.Agview.Api.Example
 {
-    public class Premise {
+    public class Prem {
         [Name("usda_pin")]
         public string UsdaPin { get; set; }
 

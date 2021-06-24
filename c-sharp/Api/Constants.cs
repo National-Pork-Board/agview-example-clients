@@ -11,8 +11,8 @@ namespace Npb.Agview.Api.Example
 
         private static readonly string dbDirectory =
              Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../../db"));
-        public static readonly string PremisesFilePath = $"{dbDirectory}/premise.csv";
-        public static readonly string PremiseAddressesFilePath = $"{dbDirectory}/premise_address.csv";
+        public static readonly string PremsFilePath = $"{dbDirectory}/prem.csv";
+        public static readonly string PremAddressesFilePath = $"{dbDirectory}/prem_address.csv";
         public static readonly string MovementFilePath = $"{dbDirectory}/movement.csv";
         public static readonly string MovementAddressesFilePath = $"{dbDirectory}/movement_addresses.csv";
     }

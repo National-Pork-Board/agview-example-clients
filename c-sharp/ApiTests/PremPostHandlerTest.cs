@@ -6,27 +6,27 @@ using Xunit;
 
 namespace Npb.Agview.ApiTests.Example
 {
-    public class PremisePostHandlerTest
+    public class PremPostHandlerTest
     {
-        private readonly PremisePostHandler _sut;
+        private readonly PremPostHandler _sut;
 
         private readonly HttpClient _httpClient = new();
         private readonly string BaseUrl = Constants.BaseUrl;
         private readonly string ApiKey = Constants.ApiKey;
         private readonly string ApiSecret = Constants.ApiSecret;
 
-        public PremisePostHandlerTest()
+        public PremPostHandlerTest()
         {
             var accessTokenHandler = new AccessTokenHandler(_httpClient, BaseUrl, ApiKey, ApiSecret);
-            var premiseDbHandler = new PremiseDbHandler(Constants.PremisesFilePath, Constants.PremiseAddressesFilePath);
+            var premDbHandler = new PremDbHandler(Constants.PremsFilePath, Constants.PremAddressesFilePath);
 
-            _sut = new PremisePostHandler(_httpClient, accessTokenHandler, BaseUrl, premiseDbHandler);
+            _sut = new PremPostHandler(_httpClient, accessTokenHandler, BaseUrl, premDbHandler);
         }
 
         [Fact]
-        public async Task CreatesPremises()
+        public async Task CreatesPrems()
         {
-            var actual = await _sut.CreatePremises();
+            var actual = await _sut.CreatePrems();
 
             actual.Should().HaveCountGreaterThan(0);
         }

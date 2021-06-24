@@ -1,6 +1,6 @@
 ﻿namespace Npb.Agview.Api.Example
 {
-    public class CreatedPremise
+    public class CreatedPrem
     {
         public string Id { get; set; }
 

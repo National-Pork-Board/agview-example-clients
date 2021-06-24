@@ -5,11 +5,11 @@ using Xunit;
 namespace Npb.Agview.ApiTests.Example
 {
 
-    public class PremiseDbHandlerTest
+    public class PremDbHandlerTest
     {
-        private readonly PremiseDbHandler _sut;
-        private readonly string PremisesFilePath = Constants.PremisesFilePath;
-        private readonly string PremiseAddressesFilePath = Constants.PremiseAddressesFilePath;
+        private readonly PremDbHandler _sut;
+        private readonly string PremsFilePath = Constants.PremsFilePath;
+        private readonly string PremAddressesFilePath = Constants.PremAddressesFilePath;
 
         private const string UsdaPin1 = "1277XH9";
         private const string UsdaPin2 = "0615PKA";
@@ -31,15 +31,15 @@ namespace Npb.Agview.ApiTests.Example
         private const string Zip2 = "44108";
         private const string State2 = "OH";
 
-        public PremiseDbHandlerTest()
+        public PremDbHandlerTest()
         {
-            _sut = new PremiseDbHandler(PremisesFilePath, PremiseAddressesFilePath);
+            _sut = new PremDbHandler(PremsFilePath, PremAddressesFilePath);
         }
 
         [Fact]
-        public void GetsPremises()
+        public void GetsPrems()
         {
-            var expected1 = new Premise
+            var expected1 = new Prem
             {
               UsdaPin = UsdaPin1,
               PremName = PremName1,
@@ -52,7 +52,7 @@ namespace Npb.Agview.ApiTests.Example
               NumberOfAnimalsOnSite = NumberOfAnimalsOnSite
             };
 
-            var expected2 = new Premise
+            var expected2 = new Prem
             {
                 UsdaPin = UsdaPin2,
                 PremName = PremName2,
@@ -65,7 +65,7 @@ namespace Npb.Agview.ApiTests.Example
                 NumberOfAnimalsOnSite = NumberOfAnimalsOnSite
             };
 
-            var actual = _sut.GetPremisesToLoad();
+            var actual = _sut.GetPremsToLoad();
 
             actual.Should().HaveCount(2);
             actual.Should().ContainEquivalentOf(expected1);
@@ -73,17 +73,17 @@ namespace Npb.Agview.ApiTests.Example
         }
 
         [Fact]
-        public void GetsPremiseColumnNames()
+        public void GetsPremColumnNames()
         {
-            var actual = _sut.GetPremiseColumnNames();
+            var actual = _sut.GetPremColumnNames();
 
             string.Join(",", actual).Should().Be("usda_pin,prem_name,site_capacity_number_animals,ice_contact_email,ice_contact_phone,location_type,species,site_capacity_number_barns,number_of_animals_on_site");
         }
 
         [Fact]
-        public void GetsPremiseAddresses()
+        public void GetsPremAddresses()
         {
-            var expected1 = new PremiseAddress
+            var expected1 = new PremAddress
             {
                 UsdaPin = UsdaPin1,
                 StreetAddress = StreetAddress1,
@@ -91,7 +91,7 @@ namespace Npb.Agview.ApiTests.Example
                 Zip = Zip1,
                 State = State1
             };
-            var expected2 = new PremiseAddress
+            var expected2 = new PremAddress
             {
                 UsdaPin = UsdaPin2,
                 StreetAddress = StreetAddress2,
@@ -100,7 +100,7 @@ namespace Npb.Agview.ApiTests.Example
                 State = State2
             };
 
-            var actual = _sut.GetPremiseAddressesToLoad();
+            var actual = _sut.GetPremAddressesToLoad();
 
             actual.Should().HaveCount(2);
             actual.Should().ContainEquivalentOf(expected1);
@@ -108,9 +108,9 @@ namespace Npb.Agview.ApiTests.Example
         }
 
         [Fact]
-        public void GetsPremiseAddressColumnNames()
+        public void GetsPremAddressColumnNames()
         {
-            var actual = _sut.GetPremiseAddressColumnNames();
+            var actual = _sut.GetPremAddressColumnNames();
 
             string.Join(",", actual).Should().Be("usda_pin,street_address,city,state,zip");
         }

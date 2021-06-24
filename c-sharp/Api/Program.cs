@@ -26,15 +26,15 @@ namespace Npb.Agview.Api.Example
             Console.WriteLine("New access token due to expiration: " + await accessTokenHandler.GetNonExpiredOrNewAccessToken(accessToken, 100000) + "\n");
 
             Console.WriteLine();
-            Console.WriteLine("*********Create Premises Using Multiple Data Sources*************************************************");
-            var premiseDbHandler = new PremiseDbHandler(PremisesFilePath, PremiseAddressesFilePath);
-            var premisePostHandler = new PremisePostHandler(httpClient, accessTokenHandler, BaseUrl, premiseDbHandler);
-            Console.WriteLine("Combining Premise data");
-            Console.WriteLine("\t" + string.Join(", ", premiseDbHandler.GetPremiseColumnNames()));
-            Console.WriteLine("with PremiseAddress data");
-            Console.WriteLine("\t" + string.Join(", ", premiseDbHandler.GetPremiseAddressColumnNames()));
-            List<CreatedPremise> createdPremises = await premisePostHandler.CreatePremises();
-            Console.WriteLine("Created premises: " + string.Join(", ", createdPremises));
+            Console.WriteLine("*********Create Prems Using Multiple Data Sources*************************************************");
+            var premDbHandler = new PremDbHandler(PremsFilePath, PremAddressesFilePath);
+            var premPostHandler = new PremPostHandler(httpClient, accessTokenHandler, BaseUrl, premDbHandler);
+            Console.WriteLine("Combining Prem data");
+            Console.WriteLine("\t" + string.Join(", ", premDbHandler.GetPremColumnNames()));
+            Console.WriteLine("with PremAddress data");
+            Console.WriteLine("\t" + string.Join(", ", premDbHandler.GetPremAddressColumnNames()));
+            List<CreatedPrem> createdPrems = await premPostHandler.CreatePrems();
+            Console.WriteLine("Created prems: " + string.Join(", ", createdPrems));
 
             Console.WriteLine();
             Console.WriteLine("*********Create Movements Using Multiple Data Sources*************************************************");
