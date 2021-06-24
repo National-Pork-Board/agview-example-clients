@@ -28,8 +28,8 @@ public class App {
 
         System.out.println();
         System.out.println("*********Create Premises Using Multiple Data Sources*************************************************");
-        var premiseDbHandler = new PremiseDbHandler(DB_DIRECTORY +"/premise.csv",
-                DB_DIRECTORY +"/premise_address.csv", new DbHandler());
+        var premiseDbHandler = new PremiseDbHandler(DB_DIRECTORY +"/prem.csv",
+                DB_DIRECTORY +"/prem_address.csv", new DbHandler());
         var premisePostHandler = new PremisePostHandler(httpClient, arguments, accessTokenHandler, premiseDbHandler);
         System.out.println("Combining Premise data");
         System.out.println("\t"+premiseDbHandler.getPremiseColumnNames());

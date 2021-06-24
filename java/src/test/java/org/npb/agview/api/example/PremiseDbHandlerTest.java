@@ -34,8 +34,8 @@ class PremiseDbHandlerTest {
 
     @BeforeEach
     public void setup() {
-        sut = new PremiseDbHandler(DB_DIRECTORY+"/premise.csv",
-                DB_DIRECTORY+"/premise_address.csv", new DbHandler());
+        sut = new PremiseDbHandler(DB_DIRECTORY+"/prem.csv",
+                DB_DIRECTORY+"/prem_address.csv", new DbHandler());
     }
 
     @Test
