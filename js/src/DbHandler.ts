@@ -37,3 +37,9 @@ export async function getData(filePath: string): Promise<Map<string, any>[]> {
         myParser.on("error", (err) => reject(err));
     })
 }
+
+export async function getColumnNames(premFilePath: string): Promise<IterableIterator<string>> {
+    let prems = await getData(premFilePath)
+
+    return prems[0].keys()
+}
