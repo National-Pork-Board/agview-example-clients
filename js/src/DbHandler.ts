@@ -2,7 +2,7 @@ import parse, * as csvParse from 'csv-parse';
 import * as fs from 'fs';
 import * as path from 'path'
 
-export function getData(filePath: string) {
+export async function getData(filePath: string): Promise<Map<string, any>[]> {
     var myParser: csvParse.Parser = parse({ delimiter: ',' }, function (err, data) {
     }) as csvParse.Parser;
 
@@ -12,6 +12,7 @@ export function getData(filePath: string) {
 
     const chunks: Array<Array<string>> = [];
     const processedChunks: Array<Map<string, any>> = []
+
     return new Promise<Map<string, any>[]>(function (resolve, reject) {
         myParser.on("data", (chunk) => chunks.push(chunk))
         myParser.on("end", () => {

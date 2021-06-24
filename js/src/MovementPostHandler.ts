@@ -3,36 +3,32 @@ import { getData } from "./DbHandler"
 import { getAccessToken } from "./AccessTokenHandler"
 import Constants from './Constants'
 
-export function createMovements(movementFilePath: string, movementAddressesFilePath: string) {
-    let movementsPromise = getData(movementFilePath)
-    return movementsPromise.then((movements) => {
-        let movementsAddressesPromise = getData(movementAddressesFilePath)
-        return movementsAddressesPromise.then((movementsAddresses) => {
-            let movementAddressesByMovementId: Map<string, Map<string, any>> = new Map()
-            movementsAddresses.forEach(movementAddresses => {
-                movementAddressesByMovementId.set(movementAddresses.get('movement_id'), movementAddresses)
-            })
+export async function createMovements(movementFilePath: string, movementAddressesFilePath: string) {
+    let movements = await getData(movementFilePath)
 
-            let requestBody: Array<any> = createRequestBody(movements, movementAddressesByMovementId)
+    let movementsAddresses = await getData(movementAddressesFilePath)
 
-            let accessTokenPromise = getAccessToken(Constants.NPB_BASE_URL, Constants.NPB_API_KEY, Constants.NPB_API_SECRET)
-            return accessTokenPromise.then(
-                (accessToken) => {
-                    axios.post(`${Constants.NPB_BASE_URL}/api/v1/movements/`, requestBody,
-                        {
-                            headers: { Authorization: `Bearer ${accessToken.access}` }
-                        })
-                        .then(res => {
-                            console.log(`Created movements with status ${res.status}`)
-
-                            return res
-                        })
-                        .catch(error => {
-                            console.error(error)
-                        })
-                })
-        })
+    let movementAddressesByMovementId: Map<string, Map<string, any>> = new Map()
+    movementsAddresses.forEach(movementAddresses => {
+        movementAddressesByMovementId.set(movementAddresses.get('movement_id'), movementAddresses)
     })
+
+    let requestBody: Array<any> = createRequestBody(movements, movementAddressesByMovementId)
+
+    let accessToken = await getAccessToken(Constants.NPB_BASE_URL, Constants.NPB_API_KEY, Constants.NPB_API_SECRET)
+
+    return axios.post(`${Constants.NPB_BASE_URL}/api/v1/movements/`, requestBody,
+        {
+            headers: { Authorization: `Bearer ${accessToken.access}` }
+        })
+        .then(res => {
+            console.log(`Created movements with status ${res.status}`)
+
+            return res
+        })
+        .catch(error => {
+            console.error(error)
+        })
 }
 
 function createRequestBody(movements: Map<string, any>[], movementAddressesByMovementId: Map<string, Map<string, any>>): Array<any> {

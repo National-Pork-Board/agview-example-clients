@@ -3,36 +3,31 @@ import { getData } from "./DbHandler"
 import { getAccessToken } from "./AccessTokenHandler"
 import Constants from './Constants'
 
-export function createPrems(premFilePath: string, premAddressFilePath: string) {
-    let premsPromise = getData(premFilePath)
-    return premsPromise.then((prems) => {
-        let premAddressesPromise = getData(premAddressFilePath)
-        return premAddressesPromise.then((premAddresses) => {
-            let premAddressByUsdaPin: Map<string, Map<string, any>> = new Map()
-            premAddresses.forEach(premAddress => {
-                premAddressByUsdaPin.set(premAddress.get('usda_pin'), premAddress)
-            })
+export async function createPrems(premFilePath: string, premAddressFilePath: string) {
+    let prems = await getData(premFilePath)
+    let premAddresses = await getData(premAddressFilePath)
 
-            let requestBody: Array<any> = createRequestBody(prems, premAddressByUsdaPin)
-
-            let accessTokenPromise = getAccessToken(Constants.NPB_BASE_URL, Constants.NPB_API_KEY, Constants.NPB_API_SECRET)
-            return accessTokenPromise.then(
-                (accessToken) => {
-                    axios.post(`${Constants.NPB_BASE_URL}/api/v1/prems/`, requestBody,
-                        {
-                            headers: { Authorization: `Bearer ${accessToken.access}` }
-                        })
-                        .then(res => {
-                            console.log(`Created prems with status ${res.status}`)
-
-                            return res
-                        })
-                        .catch(error => {
-                            console.error(error)
-                        })
-                })
-        })
+    let premAddressByUsdaPin: Map<string, Map<string, any>> = new Map()
+    premAddresses.forEach(premAddress => {
+        premAddressByUsdaPin.set(premAddress.get('usda_pin'), premAddress)
     })
+
+    let requestBody: Array<any> = createRequestBody(prems, premAddressByUsdaPin)
+
+    let accessToken = await getAccessToken(Constants.NPB_BASE_URL, Constants.NPB_API_KEY, Constants.NPB_API_SECRET)
+
+    return axios.post(`${Constants.NPB_BASE_URL}/api/v1/prems/`, requestBody,
+        {
+            headers: { Authorization: `Bearer ${accessToken.access}` }
+        })
+        .then(res => {
+            console.log(`Created prems with status ${res.status}`)
+
+            return res
+        })
+        .catch(error => {
+            console.error(error)
+        })
 }
 
 function createRequestBody(prems: Map<string, any>[], premAddressByUsdaPin: Map<string, Map<string, any>>): Array<any> {
