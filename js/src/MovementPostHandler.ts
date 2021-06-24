@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { getMovementAddressesData, getMovementData } from "./MovementDbHandler"
+import { getData } from "./DbHandler"
 import { getAccessToken } from "./AccessTokenHandler"
 import Constants from './Constants'
 
 export function createMovements(movementFilePath: string, movementAddressesFilePath: string) {
-    let movementsPromise = getMovementData(movementFilePath)
+    let movementsPromise = getData(movementFilePath)
     return movementsPromise.then((movements) => {
-        let movementsAddressesPromise = getMovementAddressesData(movementAddressesFilePath)
+        let movementsAddressesPromise = getData(movementAddressesFilePath)
         return movementsAddressesPromise.then((movementsAddresses) => {
             let movementAddressesByMovementId: Map<string, Map<string, any>> = new Map()
             movementsAddresses.forEach(movementAddresses => {

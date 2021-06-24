@@ -2,12 +2,7 @@ import parse, * as csvParse from 'csv-parse';
 import * as fs from 'fs';
 import * as path from 'path'
 
-export function getMovementData(movementFilePath: string) {
-
-    return getData(movementFilePath)
-}
-
-function getData(filePath: string) {
+export function getData(filePath: string) {
     var myParser: csvParse.Parser = parse({ delimiter: ',' }, function (err, data) {
     }) as csvParse.Parser;
 
@@ -40,10 +35,4 @@ function getData(filePath: string) {
         })
         myParser.on("error", (err) => reject(err));
     })
-}
-
-
-export function getMovementAddressesData(movementAddressPath: string) {
-
-    return getData(movementAddressPath)
 }
