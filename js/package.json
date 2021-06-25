@@ -3,9 +3,18 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "csv": "^5.5.0",
+    "@types/node": "^15.12.4",
     "axios": "^0.21.1",
-    "typescript": "^4.3.4",
-    "@types/node": "^15.12.4"
+    "csv": "^5.5.0"
+  },
+  "scripts": {
+    "test": "tsc --module CommonJS && jest",
+    "run-app": "tsc --module CommonJS && node ./src/App.js"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "jest": "^27.0.5",
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.3.4"
   }
 }
