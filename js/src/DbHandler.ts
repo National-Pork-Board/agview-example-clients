@@ -8,8 +8,7 @@ interface CsvFileContent {
 }
 
 export async function getData(filePath: string): Promise<CsvFileContent> {
-    var myParser: csvParse.Parser = parse({ delimiter: ',' }, function (err, data) {
-    }) as csvParse.Parser;
+    const myParser: csvParse.Parser = parse({ delimiter: ',' }) as csvParse.Parser;
 
     const fullFilePath = path.join(__dirname, filePath);
     let stream = fs.createReadStream(fullFilePath)
@@ -21,13 +20,12 @@ export async function getData(filePath: string): Promise<CsvFileContent> {
     return new Promise<CsvFileContent>(function (resolve, reject) {
         myParser.on("data", (chunk) => chunks.push(chunk))
         myParser.on("end", () => {
-            var rowNum = 0
-            var headerRow: Array<string> = []
+            let rowNum = 0
+            let headerRow: Array<string> = []
 
             for (let row of chunks) {
                 if (rowNum++ == 0) {
                     headerRow = row
-                    continue
                 }
                 else {
                     let valueByFieldName: Map<string, any> = new Map()
@@ -45,7 +43,5 @@ export async function getData(filePath: string): Promise<CsvFileContent> {
 }
 
 export async function getColumnNames(premFilePath: string): Promise<string[]> {
-    let prems = await getData(premFilePath)
-
     return (await getData(premFilePath)).header
 }
