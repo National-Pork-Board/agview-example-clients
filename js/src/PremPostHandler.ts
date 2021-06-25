@@ -4,8 +4,8 @@ import { getNewAccessToken } from "./AccessTokenHandler"
 import Constants from './Constants'
 
 export async function createPrems(premFilePath: string, premAddressFilePath: string) {
-    let prems = await getData(premFilePath)
-    let premAddresses = await getData(premAddressFilePath)
+    let prems = (await getData(premFilePath)).body
+    let premAddresses = (await getData(premAddressFilePath)).body
 
     let premAddressByUsdaPin: Map<string, Map<string, any>> = new Map()
     premAddresses.forEach(premAddress => {

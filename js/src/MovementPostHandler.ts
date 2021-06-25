@@ -4,8 +4,8 @@ import { getNewAccessToken } from "./AccessTokenHandler"
 import Constants from './Constants'
 
 export async function createAllMovements(movementFilePath: string, movementAddressesFilePath: string) {
-    let movements = await getData(movementFilePath)
-    let movementsAddresses = await getData(movementAddressesFilePath)
+    let movements = (await getData(movementFilePath)).body
+    let movementsAddresses = (await getData(movementAddressesFilePath)).body
 
     return createMovements(movements, movementsAddresses)
 }
@@ -86,9 +86,9 @@ function getOrNull(value: any) {
 }
 
 export async function createMovementsForTimestampRange(movementFilePath: string, movementAddressesFilePath: string, startTimestamp: string, endTimestamp: string) {
-    let allMovements = await getData(movementFilePath)
+    let allMovements = (await getData(movementFilePath)).body
     let movements = allMovements.filter(movementsWithinTimerange(startTimestamp, endTimestamp));
-    let movementsAddresses = await getData(movementAddressesFilePath)
+    let movementsAddresses = (await getData(movementAddressesFilePath)).body
 
     return createMovements(movements, movementsAddresses)
 }

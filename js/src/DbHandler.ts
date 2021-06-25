@@ -2,7 +2,12 @@ import parse, * as csvParse from 'csv-parse';
 import * as fs from 'fs';
 import * as path from 'path'
 
-export async function getData(filePath: string): Promise<Map<string, any>[]> {
+interface CsvFileContent {
+    header: string[],
+    body: Map<string, any>[]
+}
+
+export async function getData(filePath: string): Promise<CsvFileContent> {
     var myParser: csvParse.Parser = parse({ delimiter: ',' }, function (err, data) {
     }) as csvParse.Parser;
 
@@ -13,7 +18,7 @@ export async function getData(filePath: string): Promise<Map<string, any>[]> {
     const chunks: Array<Array<string>> = [];
     const processedChunks: Array<Map<string, any>> = []
 
-    return new Promise<Map<string, any>[]>(function (resolve, reject) {
+    return new Promise<CsvFileContent>(function (resolve, reject) {
         myParser.on("data", (chunk) => chunks.push(chunk))
         myParser.on("end", () => {
             var rowNum = 0
@@ -32,14 +37,15 @@ export async function getData(filePath: string): Promise<Map<string, any>[]> {
                     processedChunks.push(valueByFieldName)
                 }
             }
-            resolve(processedChunks)
+
+            resolve({ header: headerRow, body: processedChunks } as CsvFileContent)
         })
         myParser.on("error", (err) => reject(err));
     })
 }
 
-export async function getColumnNames(premFilePath: string): Promise<IterableIterator<string>> {
+export async function getColumnNames(premFilePath: string): Promise<string[]> {
     let prems = await getData(premFilePath)
 
-    return prems[0].keys()
+    return (await getData(premFilePath)).header
 }
