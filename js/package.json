@@ -8,8 +8,8 @@
     "csv": "^5.5.0"
   },
   "scripts": {
-    "test": "tsc --module CommonJS && jest",
-    "run-app": "tsc --module CommonJS && node ./src/App.js"
+    "test": "tsc && jest",
+    "run-app": "tsc && node ./src/App.js"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
