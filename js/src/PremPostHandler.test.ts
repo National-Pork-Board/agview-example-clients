@@ -6,8 +6,8 @@ const PREM_ADDRESS_FILE_PATH = '../../db/prem_address.csv'
 
 describe('PremPostHandler', () => {
     it('creates prems', async () => {
-        let actual = (await createPrems(PREM_FILE_PATH, PREM_ADDRESS_FILE_PATH)) as AxiosResponse<any>
+        let actual = (await createPrems(PREM_FILE_PATH, PREM_ADDRESS_FILE_PATH)) as AxiosResponse<Array<any>>
 
-        expect(actual.data).toEqual('')
+        expect(actual.data.length).toEqual(2)
     });
 })

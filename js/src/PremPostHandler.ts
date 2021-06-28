@@ -20,7 +20,7 @@ export async function createPrems(premFilePath: string, premAddressFilePath: str
         {
             headers: { Authorization: `Bearer ${accessToken.access}` }
         })
-        .then((res: AxiosResponse<any>) => res)
+        .then((res: AxiosResponse<Array<any>>) => res)
         .catch(error => {
             console.error(error)
         })
