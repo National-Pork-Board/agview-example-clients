@@ -52,6 +52,12 @@ public class App {
         var toDate = "2021-06-08T23:59";
         System.out.println("Created movements for date range "+fromDate+" thru "+toDate+": "+movementPostHandler.createMovementsForDateRange(fromDate,toDate));
 
+        System.out.println();
+        System.out.println("*********Create Lab**********************************************************************************");
+        var labPostHandler = new LabPostHandler(httpClient,
+                arguments,
+                accessTokenHandler);
+        System.out.println("Created lab with following response: "+labPostHandler.createLab());
     }
 
     private static Arguments processArguments(String[] args) {
