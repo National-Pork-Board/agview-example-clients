@@ -8,7 +8,6 @@ import java.net.http.HttpClient;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
-import static org.npb.agview.api.example.Constants.*;
 
 class LabPostHandlerTest {
 
