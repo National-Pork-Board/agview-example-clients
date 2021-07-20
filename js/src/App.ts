@@ -2,6 +2,7 @@ import { getColumnNames } from './DbHandler'
 import { getNewAccessToken, getNonExpiredOrNewAccessToken } from './AccessTokenHandler'
 import Constants from './Constants'
 import { createPrems } from './PremPostHandler'
+import { createLab } from './LabPostHandler'
 import { createAllMovements, createMovementsForTimestampRange } from './MovementPostHandler'
 
 const ONE_SECOND = 1000
@@ -49,6 +50,11 @@ async function doIt() {
     let movementForTimestampRangeResponse = await createMovementsForTimestampRange(MOVEMENT_FILE_PATH, MOVEMENT_ADDRESSES_FILE_PATH,
         MOVEMENT_START_TIMESTAMP, MOVEMENT_END_TIMESTAMP)
     console.log(`Created movements for date range ${MOVEMENT_START_TIMESTAMP} thru ${MOVEMENT_START_TIMESTAMP}: ${JSON.stringify(movementForTimestampRangeResponse!.data, null, 1)}`)
+
+    console.log('\n')
+    console.log('*********Create Lab*************************************************')
+    let labResponse = await createLab()
+    console.log(`Created a lab: ${labResponse!.data}`)
 }
 
 function delay(ms: number) {
