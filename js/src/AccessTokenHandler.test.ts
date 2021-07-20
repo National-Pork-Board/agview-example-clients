@@ -26,7 +26,7 @@ describe('AccessTokenHandler', () => {
 
     it('gets new access token when existing one is outside of validity Range', async () => {
         let existingAccessToken = await getNewAccessToken(Constants.NPB_BASE_URL, Constants.NPB_API_KEY, Constants.NPB_API_SECRET)
-        await delay(10)
+        await delay(1000)
 
         let actual = await getNonExpiredOrNewAccessToken(Constants.NPB_BASE_URL, Constants.NPB_API_KEY, Constants.NPB_API_SECRET,
             existingAccessToken, 10000)

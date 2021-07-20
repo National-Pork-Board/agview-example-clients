@@ -15,7 +15,7 @@ export async function getNewAccessToken(baseUrl: string, apiKey: String, apiSecr
 export async function getNonExpiredOrNewAccessToken(baseUrl: string, apiKey: String, apiSecret: string,
     existingAccessToken: any, minimumValidityLeftInSeconds: number) {
 
-    let expirationTimeInSeconds = +existingAccessToken.exp
+    let expirationTimeInSeconds = existingAccessToken.exp
 
     if ((expirationTimeInSeconds - minimumValidityLeftInSeconds) >= (Date.now() / 1000)) {
         return existingAccessToken
