@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,6 +47,11 @@ namespace Npb.Agview.Api.Example
             var fromDate = "2021-06-07T00:00";
             var toDate = "2021-06-08T23:59";
             Console.WriteLine("Created movements for date range " + fromDate + " thru " + toDate + ": " + string.Join(", ", await movementPostHandler.CreateMovementsForDateRange(fromDate, toDate)));
+
+            Console.WriteLine();
+            Console.WriteLine("*********Create Lab**********************************************************************************");
+            var labPostHandler = new LabPostHandler(httpClient, accessTokenHandler, BaseUrl);
+            Console.WriteLine($"Created lab: {await labPostHandler.CreateLab()}");
         }
     }
 }
