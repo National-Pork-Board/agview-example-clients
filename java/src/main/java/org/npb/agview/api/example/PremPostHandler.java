@@ -53,6 +53,8 @@ public class PremPostHandler {
                             put("city", premAddressByUsdaPin.get(prem.getUsdaPin()).getCity());
                             put("state", premAddressByUsdaPin.get(prem.getUsdaPin()).getState());
                             put("zip", premAddressByUsdaPin.get(prem.getUsdaPin()).getZip());
+                            put("latitude", 44.047049);
+                            put("longitude", -98.287114);
                         }
                     }
             )
